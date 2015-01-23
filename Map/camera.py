@@ -13,15 +13,22 @@ class Camera(object):
 
     def update(self, target):
         self.rect.center = target.center
-        self.rect.clamp_ip(self.bounds)
+        #self.rect.clamp_ip(self.bounds)
 
     def draw_background(self, surf, bg):
         surf.fill(BLACK)
         bg.draw(surf, -self.rect.x, -self.rect.y)
 
-    def rel_rect(rect, parent):
+    def rel_rect(self, rect, parent):
         return Rect((rect.x - parent.x, rect.y - parent.y), rect.size)
 
-    def draw_sprite(self, surf, s):
-        if self.rect.colliderect(s.rect):
-            surf.blit(s.image, self.rel_rect(s.rect, self.rect))
+    def drawPlayer(self, surf, player):
+        if self.rect.colliderect(player.rect):
+            r = self.rel_rect(player.rect, self.rect)
+            player.draw(surf, r)
+        for a in player.arrows:
+            if self.rect.colliderect(a.rect):
+                r = self.rel_rect(a.rect, self.rect)
+                a.draw(surf, r)
+
+

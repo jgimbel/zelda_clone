@@ -10,8 +10,8 @@ class tile(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.topleft = tl
 
-        self.place = self.image.get_rect()
+        self.place = tl
 
     def update(self, x, y):
-        self.rect.x = self.place.x + x
-        self.rect.y = self.place.y + y
+        self.rect.x =  self.place[0] + x - (MAPHEIGHT * TILESIZE/2)
+        self.rect.y =  self.place[1] + y - (MAPWIDTH * TILESIZE/2)

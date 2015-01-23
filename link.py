@@ -24,7 +24,7 @@ class Player(pygame.sprite.Sprite):
         self.face = DOWN
         self.image = self.direction[self.face]
         self.rect = self.image.get_rect()
-        self.rect.topleft = [0, 0]
+        self.rect.topleft = [50, 50]
         self.vx = 0
         self.vy = 0
         self.showBow = False
@@ -51,7 +51,7 @@ class Player(pygame.sprite.Sprite):
             self.charge = 250
 
         if type(self.inventory[BOW]) == bow and self.inventory[ARROWS] > 0:
-            self.arrows.add(arrow(self.face, self.rect.topleft, self.charge))
+            self.arrows.add(arrow(self.face, self.rect.center, self.charge))
             self.inventory[ARROWS] -= 1
         self.charge = 0
 
@@ -106,17 +106,16 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += self.vy * dt
         self.arrows.update(dt)
 
-    def draw(self, SCREEN):
-        SCREEN.blit(self.image, self.rect)
-        self.arrows.draw(SCREEN)
+    def draw(self, SCREEN, rect):
+        #self.rect = rect
+        SCREEN.blit(self.image, rect)
 
         if type(self.inventory[SWORD]) == sword and self.equiped == SWORD:
-            SCREEN.blit(self.inventory[SWORD].image, (self.rect.topleft[0], self.rect.topleft[1] + 10))
-            SCREEN.blit(self.inventory[SHIELD].image, (self.rect[0] + 10, self.rect[1] + 14))
+            SCREEN.blit(self.inventory[SWORD].image, (rect.topleft[0], rect.topleft[1] + 10))
+            SCREEN.blit(self.inventory[SHIELD].image, (rect[0] + 10, rect[1] + 14))
 
         if type(self.inventory[BOW]) == bow and self.equiped == BOW:
-            SCREEN.blit(self.inventory[BOW].image, (self.rect[0] + 8, self.rect[1] + 11))
-
+            SCREEN.blit(self.inventory[BOW].image, (rect[0] + 8, rect[1] + 11))
         '''
         placePosition = 10
         for item in self.resources:

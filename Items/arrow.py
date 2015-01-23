@@ -35,3 +35,6 @@ class arrow(pygame.sprite.Sprite):
         self.speed -= 10
         if self.distance > self.speed:
             self.kill()
+
+    def draw(self, SCREEN, rect):
+        SCREEN.blit(self.image, rect)
