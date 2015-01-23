@@ -31,4 +31,9 @@ class Camera(object):
                 r = self.rel_rect(a.rect, self.rect)
                 a.draw(surf, r)
 
+    def drawEnemies(self, surf, enemies):
 
+        for enemy in enemies:
+            if self.rect.colliderect(enemy.rect):
+                r = self.rel_rect(enemy.rect, self.rect)
+                enemy.draw(surf, r)

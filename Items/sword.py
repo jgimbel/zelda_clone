@@ -8,12 +8,15 @@ class sword(pygame.sprite.Sprite):
         self.image = pygame.image.load("Sprites/items/sword.png")
         self.rect = self.image.get_rect()
         self.direction = 0
+        self.isDown = False
     def swordUp(self, charge):
-        if self.direction == 90:
+        if self.isDown:
             self.image = pygame.transform.rotate(self.image, -90)
             self.direction -= 90
+            self.isDown = False
 
     def swordDown(self):
-        if self.direction == 0:
+        if not self.isDown:
             self.image = pygame.transform.rotate(self.image, 90)
             self.direction += 90
+            self.isDown = True

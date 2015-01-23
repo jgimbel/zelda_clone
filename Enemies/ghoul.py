@@ -1,7 +1,5 @@
 __author__ = 'joel'
-import pygame
-class ghoul(pygame.sprite.Sprite):
+from Enemy import enemy
+class ghoul(enemy):
     def __init__(self):
-        super(ghoul, self).__init__()
-        self.image = None
-        self.rect = None
+        super(ghoul, self).__init__(None, None, 0, 0)

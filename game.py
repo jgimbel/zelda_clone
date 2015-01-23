@@ -1,6 +1,8 @@
 __author__ = 'joel'
 from pygame.locals import *
 
+from Enemies import *
+
 from resources import *
 from Map import *
 from link import Player
@@ -13,12 +15,13 @@ fpsClock = pygame.time.Clock()
 PLAYER = Player()
 CAM = Camera(PLAYER, Rect((0,0), (MAPWIDTH, MAPHEIGHT)), SCREEN.subsurface((0, 40, SCREEN.get_width(), SCREEN.get_height() - 40)).get_size())
 MAP = Map(PLAYER)
+scientist(0, 0)
 
 def draw():
     #CLEAR AND REDRAW SCREEN
     CAM.draw_background(SCREEN, MAP)
     CAM.drawPlayer(SCREEN, PLAYER)
-
+    CAM.drawEnemies(SCREEN, ENEMIES)
 
 while True:
 
@@ -26,6 +29,8 @@ while True:
     dt = fpsClock.tick(24)
     pygame.display.update()
     PLAYER.update(dt)
+
+    ENEMIES.update(PLAYER, dt, PLAYER.arrows)
     CAM.update(PLAYER.rect)
 
     # GET ALL THE EVENTS

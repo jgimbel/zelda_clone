@@ -44,6 +44,7 @@ class Player(pygame.sprite.Sprite):
 
     def swingSword(self):
         self.inventory[SWORD].swordUp(self.charge)
+        pygame.sprite.spritecollide(self.inventory[SWORD], ENEMIES, True)
         self.charge = 0
 
     def shootArrow(self):
@@ -106,12 +107,14 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += self.vy * dt
         self.arrows.update(dt)
 
+        self.inventory[SWORD].rect = pygame.Rect(self.rect.topleft[0], self.rect.topleft[1] + 10, 16, 16)
+
     def draw(self, SCREEN, rect):
         #self.rect = rect
         SCREEN.blit(self.image, rect)
 
         if type(self.inventory[SWORD]) == sword and self.equiped == SWORD:
-            SCREEN.blit(self.inventory[SWORD].image, (rect.topleft[0], rect.topleft[1] + 10))
+            SCREEN.blit(self.inventory[SWORD].image, (rect[0] + 10, rect[1] + 5))
             SCREEN.blit(self.inventory[SHIELD].image, (rect[0] + 10, rect[1] + 14))
 
         if type(self.inventory[BOW]) == bow and self.equiped == BOW:
