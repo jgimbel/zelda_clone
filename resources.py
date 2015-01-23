@@ -7,9 +7,6 @@ GRASS = 1
 WATER = 2
 COAL = 3
 
-WHITE = (255,255,255)
-BLACK = (0,0,0)
-
 pygame.font.init()
 INVFONT = ""
 if sys.platform == "linux" or sys.platform == "linux2":
@@ -20,13 +17,14 @@ elif sys.platform == "win32":
 
 TILESIZE = 32
 MAPWIDTH = 10
-MAPHEIGHT =10
+MAPHEIGHT = 10
 
 #colors
 BLACK = (0,0,0)
 BROWN = (153, 76, 0)
 GREEN = (0,255,0)
 BLUE = (0, 0, 255)
+WHITE = (255,255,255)
 
 textures = {
 	DIRT : pygame.image.load('4_earthTiles/38earth8.bmp'),
