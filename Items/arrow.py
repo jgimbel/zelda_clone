@@ -1,33 +1,32 @@
 __author__ = 'joel'
 from resources import *
 class arrow(pygame.sprite.Sprite):
-
-    def __init__(self, face):
+    speed = 300
+    def __init__(self, face, tl):
         '''
 
         :return: arrow
         '''
-        super(pygame.sprite.Sprite, self).__init__()
-        self.image = pygame.image.load("sprites/items/arrow.png").convert()
+        super(arrow, self).__init__()
+        self.image = pygame.image.load("sprites/items/arrow.png").convert_alpha()
         self.rect = self.image.get_rect()
+        self.rect.topleft = tl
         self.direction = face
-
-    def update(self, dt):
-        self.vx, self.vy = 0, 0
-        keys = pygame.key.get_pressed()
+        self.vx = 0
+        self. vy = 0
         if self.direction == UP:
             self.vy = -self.speed
+            self.image = pygame.transform.rotate(self.image, 225)
         if self.direction == DOWN:
-            self.vy =  self.speed
+            self.vy = self.speed
+            self.image = pygame.transform.rotate(self.image, 45)
         if self.direction == LEFT:
             self.vx = -self.speed
+            self.image = pygame.transform.rotate(self.image, 315)
         if self.direction == RIGHT:
-            self.vx =  self.speed
+            self.vx = self.speed
+            self.image = pygame.transform.rotate(self.image, 135)
 
-        if self.vx and self.vy:
-            self.vx *= DIAG
-            self.vy *= DIAG
-
-        dt /= 1000.0
+    def update(self, dt):
         self.rect.x += self.vx * dt
         self.rect.y += self.vy * dt

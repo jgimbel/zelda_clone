@@ -21,18 +21,8 @@ while True:
             pygame.quit()
             sys.exit()
         elif event.type == KEYDOWN:
-
-            if event.key == K_1:
-                MAP.placeBlock(DIRT)
-
-            if event.key == K_2:
-                MAP.placeBlock(GRASS)
-
-            if event.key == K_3:
-                MAP.placeBlock(WATER)
-
-            if event.key == K_4:
-                MAP.placeBlock(COAL)
+            if event.key == K_SPACE:
+               PLAYER.shootArrow()
 
     for row in range(MAPHEIGHT):
         for column in range(MAPWIDTH):
@@ -41,6 +31,7 @@ while True:
     PLAYER.update(24)
 
     SCREEN.blit(PLAYER.image, PLAYER.rect)
+    PLAYER.arrows.draw(SCREEN)
 
     if type(PLAYER.inventory[SWORD]) == sword:
         SCREEN.blit(PLAYER.inventory[SWORD].image, (PLAYER.rect.topleft[0], PLAYER.rect.topleft[1] + 10))

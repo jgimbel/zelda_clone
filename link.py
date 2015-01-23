@@ -26,15 +26,16 @@ class Player(pygame.sprite.Sprite):
             COAL: 0,
             SWORD: sword(),
             SHIELD: shield(),
-            BOW: arrow(self.face)
+            BOW: arrow(self.face, self.rect.topleft)
         }
+
+    def shootArrow(self):
+         if type(self.inventory[BOW]) == arrow:
+                    self.arrows.add(arrow(self.face, self.rect.topleft))
 
     def update(self, dt):
         self.vx, self.vy = 0, 0
         keys = pygame.key.get_pressed()
-        if keys[K_SPACE]:
-                if type(self.inventory[BOW]) == arrow:
-                    self.arrows.append(arrow(self.face))
 
         if keys[K_UP]:
             self.vy = -self.speed
