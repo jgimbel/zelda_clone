@@ -1,7 +1,9 @@
 __author__ = 'joel'
 
-import pygame
 import sys
+
+import pygame
+
 
 DIRT = 0
 GRASS = 1
@@ -12,6 +14,8 @@ SWORD = "sword"
 BOW = "bow"
 SHIELD = "shield"
 
+
+fpsClock = pygame.time.Clock()
 pygame.font.init()
 INVFONT = ""
 if sys.platform == "linux" or sys.platform == "linux2":

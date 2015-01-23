@@ -1,9 +1,8 @@
 __author__ = 'joel'
-import random
 from pygame.locals import *
+
 from map import *
 from link import Player
-from Items import *
 
 
 pygame.init()
@@ -11,9 +10,8 @@ DISPLAYSURF = pygame.display.set_mode((MAPWIDTH * TILESIZE, MAPHEIGHT * TILESIZE
 pygame.display.set_caption("Minecraft")
 
 PLAYER = Player()
-MAP = Map()
+MAP = Map(PLAYER)
 
-fpsClock = pygame.time.Clock()
 
 while True:
 
@@ -23,7 +21,7 @@ while True:
             pygame.quit()
             sys.exit()
         elif event.type == KEYDOWN:
-            if (event.key == K_RIGHT) and PLAYER.Pos[0] < (MAPWIDTH) - 1:
+            if (event.key == K_RIGHT) and PLAYER.Pos[0] < MAPWIDTH - 1:
                 PLAYER.Pos[0] += 1
 
             if (event.key == K_LEFT) and PLAYER.Pos[0] > 0:
@@ -32,7 +30,7 @@ while True:
             if (event.key == K_UP) and PLAYER.Pos[1] > 0:
                 PLAYER.Pos[1] -= 1
 
-            if (event.key == K_DOWN) and PLAYER.Pos[1] < (MAPHEIGHT) - 1:
+            if (event.key == K_DOWN) and PLAYER.Pos[1] < MAPHEIGHT - 1:
                 PLAYER.Pos[1] += 1
 
             if event.key == K_SPACE:
