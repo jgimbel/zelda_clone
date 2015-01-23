@@ -4,11 +4,7 @@ import random
 from resources import *
 from Floor import *
 
-TILESIZE = 32
-MAPWIDTH = 10
-MAPHEIGHT = 10
 class Map:
-    resources = [DIRT, GRASS, WATER, COAL]
     tilemap = pygame.sprite.Group()
     def __init__(self, player):
         self.player = player

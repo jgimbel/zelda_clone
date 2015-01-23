@@ -5,6 +5,7 @@ import math
 
 import pygame
 
+
 DIAG = 1 / math.sqrt(2)
 DOWN = 0
 UP = 1
@@ -15,6 +16,10 @@ DIRT = 0
 GRASS = 1
 WATER = 2
 COAL = 3
+
+TILESIZE = 32
+MAPWIDTH = 10
+MAPHEIGHT = 10
 
 SWORD = "sword"
 BOW = "bow"

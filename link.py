@@ -8,8 +8,8 @@ from Items import *
 
 
 class Player(pygame.sprite.Sprite):
-    speed = 150
-
+    speed = 125
+    resources = [DIRT, GRASS, WATER, COAL]
     def __init__(self):
         super(pygame.sprite.Sprite, self).__init__()
         self.image = pygame.image.load('player.png').convert_alpha()
@@ -33,8 +33,10 @@ class Player(pygame.sprite.Sprite):
         }
 
     def shootArrow(self):
-         if type(self.inventory[BOW]) == bow:
-                    self.arrows.add(arrow(self.face, self.rect.topleft))
+         if type(self.inventory[BOW]) == bow and self.inventory[ARROWS] > 0:
+            self.arrows.add(arrow(self.face, self.rect.topleft))
+            self.inventory[ARROWS] -= 1
+
 
     def update(self, dt):
         self.vx, self.vy = 0, 0
@@ -68,6 +70,7 @@ class Player(pygame.sprite.Sprite):
 
     def draw(self, SCREEN):
         SCREEN.blit(self.image, self.rect)
+        self.arrows.draw(SCREEN)
 
         if type(self.inventory[SWORD]) == sword and (self.face == DOWN or self.face == RIGHT):
             SCREEN.blit(self.inventory[SWORD].image, (self.rect.topleft[0], self.rect.topleft[1] + 10))
@@ -77,3 +80,13 @@ class Player(pygame.sprite.Sprite):
 
         if type(self.inventory[SHIELD]) == shield and self.face == UP:
             SCREEN.blit(self.inventory[BOW].image, (self.rect[0] + 8, self.rect[1] + 11))
+
+        '''
+        placePosition = 10
+        for item in self.resources:
+            SCREEN.blit(textures[item], (placePosition, MAPHEIGHT * TILESIZE + 20))
+            placePosition += 30
+            textObj = INVFONT.render(str(self.inventory[item]), True, WHITE, BLACK)
+            SCREEN.blit(textObj, (placePosition, MAPHEIGHT * TILESIZE + 20))
+            placePosition += 50
+        '''
