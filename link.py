@@ -33,10 +33,11 @@ class Player(pygame.sprite.Sprite):
         }
 
     def shootArrow(self):
+
         if self.charge > 50:
             self.charge = 50
 
-         if type(self.inventory[BOW]) == bow and self.inventory[ARROWS] > 0:
+        if type(self.inventory[BOW]) == bow and self.inventory[ARROWS] > 0:
             self.arrows.add(arrow(self.face, self.rect.topleft, self.charge))
             self.charge = 0
             self.inventory[ARROWS] -= 1
