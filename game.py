@@ -58,6 +58,9 @@ while True:
     DISPLAYSURF.blit(PLAYER.image, (PLAYER.Pos[0] * TILESIZE, PLAYER.Pos[1] * TILESIZE))
     if type(PLAYER.inventory[SWORD]) == sword:
         DISPLAYSURF.blit(PLAYER.inventory[SWORD].image, (PLAYER.Pos[0] * TILESIZE + 0, PLAYER.Pos[1] * TILESIZE + 10))
+    if type(PLAYER.inventory[SHIELD]) == shield:
+        DISPLAYSURF.blit(PLAYER.inventory[SHIELD].image, (PLAYER.Pos[0] * TILESIZE + 10, PLAYER.Pos[1] * TILESIZE + 14))
+
     placePosition = 10
     for item in MAP.resources:
         DISPLAYSURF.blit(textures[item], (placePosition, MAPHEIGHT * TILESIZE + 20))

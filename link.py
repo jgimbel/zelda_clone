@@ -13,6 +13,6 @@ class Player(pygame.sprite.Sprite):
             WATER: 0,
             COAL: 0,
             SWORD: sword(),
-            SHIELD: False,
+            SHIELD: shield(),
             BOW: False
         }
