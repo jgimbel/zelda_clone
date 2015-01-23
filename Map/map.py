@@ -2,7 +2,7 @@ __author__ = 'joel'
 import random
 
 from resources import *
-from Floor import *
+from Tile import tile
 
 class Map:
     tilemap = pygame.sprite.Group()
@@ -23,12 +23,6 @@ class Map:
 
                 self.tilemap.add(tile(t, [cl * TILESIZE, rw * TILESIZE]))
 
-    def placeBlock(self, block):
-        if self.player.inventory[block] > 0:
-            tile = self.tilemap[self.player.Pos[0]][self.player.Pos[1]]
-            self.player.inventory[block] -= 1
-            self.tilemap[self.player.Pos[1]][self.player.Pos[0]] = block
-            self.player.inventory[tile] += 1
-
-    def draw(self, SCREEN):
+    def draw(self, SCREEN, x, y):
+        self.tilemap.update(x, y)
         self.tilemap.draw(SCREEN)
