@@ -18,6 +18,8 @@ class Player(pygame.sprite.Sprite):
         self.vx = 0
         self.vy = 0
         self.face = DOWN
+        self.showBow = False
+
         self.arrows = pygame.sprite.Group()
         self.inventory = {
             DIRT: 0,
@@ -26,11 +28,12 @@ class Player(pygame.sprite.Sprite):
             COAL: 0,
             SWORD: sword(),
             SHIELD: shield(),
-            BOW: arrow(self.face, self.rect.topleft)
+            BOW: bow(),
+            ARROWS: 100
         }
 
     def shootArrow(self):
-         if type(self.inventory[BOW]) == arrow:
+         if type(self.inventory[BOW]) == bow:
                     self.arrows.add(arrow(self.face, self.rect.topleft))
 
     def update(self, dt):
@@ -40,15 +43,19 @@ class Player(pygame.sprite.Sprite):
         if keys[K_UP]:
             self.vy = -self.speed
             self.face = UP
+            self.showBow = False
         if keys[K_DOWN]:
             self.vy =  self.speed
             self.face = DOWN
+            self.showBow = True
         if keys[K_LEFT]:
             self.vx = -self.speed
             self.face = LEFT
+            self.showBow = False
         if keys[K_RIGHT]:
             self.vx =  self.speed
             self.face = RIGHT
+            self.showBow = False
 
         if self.vx and self.vy:
             self.vx *= DIAG
@@ -58,3 +65,15 @@ class Player(pygame.sprite.Sprite):
         self.rect.x += self.vx * dt
         self.rect.y += self.vy * dt
         self.arrows.update(dt)
+
+    def draw(self, SCREEN):
+        SCREEN.blit(self.image, self.rect)
+
+        if type(self.inventory[SWORD]) == sword and (self.face == DOWN or self.face == RIGHT):
+            SCREEN.blit(self.inventory[SWORD].image, (self.rect.topleft[0], self.rect.topleft[1] + 10))
+
+        if type(self.inventory[SHIELD]) == shield and (self.face == DOWN or self.face == LEFT):
+            SCREEN.blit(self.inventory[SHIELD].image, (self.rect[0] + 10, self.rect[1] + 14))
+
+        if type(self.inventory[SHIELD]) == shield and self.face == UP:
+            SCREEN.blit(self.inventory[BOW].image, (self.rect[0] + 8, self.rect[1] + 11))

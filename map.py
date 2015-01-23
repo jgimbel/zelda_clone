@@ -2,34 +2,30 @@ __author__ = 'joel'
 import random
 
 from resources import *
+from Floor import *
 
 TILESIZE = 32
 MAPWIDTH = 10
 MAPHEIGHT = 10
-textures = {
-    DIRT: pygame.image.load('sprites/earthTiles/38earth8.bmp'),
-    GRASS: pygame.image.load('sprites/grassTiles/1grass1.bmp'),
-    WATER: pygame.image.load('sprites/waterTiles/13water3.bmp'),
-    COAL: pygame.image.load('sprites/earthTiles/32earth2.bmp')
-}
 class Map:
     resources = [DIRT, GRASS, WATER, COAL]
-    tilemap = [[DIRT for w in range(MAPWIDTH)] for h in range(MAPHEIGHT)]
+    tilemap = pygame.sprite.Group()
     def __init__(self, player):
         self.player = player
+        back = [[DIRT for w in range(MAPWIDTH)] for h in range(MAPHEIGHT)]
         for rw in range(MAPHEIGHT):
             for cl in range(MAPWIDTH):
                 randomNumber = random.randint(0, 15)
                 if randomNumber == 0:
-                    tile = COAL
+                    t = COAL
                 elif randomNumber == 1 or randomNumber == 2:
-                    tile = WATER
+                    t = WATER
                 elif 3 <= randomNumber <= 7:
-                    tile = GRASS
+                    t = GRASS
                 else:
-                    tile = DIRT
+                    t = DIRT
 
-                self.tilemap[rw][cl] = tile
+                self.tilemap.add(tile(t, [cl * TILESIZE, rw * TILESIZE]))
 
     def placeBlock(self, block):
         if self.player.inventory[block] > 0:
@@ -37,3 +33,6 @@ class Map:
             self.player.inventory[block] -= 1
             self.tilemap[self.player.Pos[1]][self.player.Pos[0]] = block
             self.player.inventory[tile] += 1
+
+    def draw(self, SCREEN):
+        self.tilemap.draw(SCREEN)

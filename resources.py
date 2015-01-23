@@ -4,6 +4,7 @@ import sys
 import math
 
 import pygame
+
 DIAG = 1 / math.sqrt(2)
 DOWN = 0
 UP = 1
@@ -18,8 +19,13 @@ COAL = 3
 SWORD = "sword"
 BOW = "bow"
 SHIELD = "shield"
-
-
+ARROWS = "arrows"
+textures = {
+    DIRT: pygame.image.load('sprites/earthTiles/38earth8.bmp'),
+    GRASS: pygame.image.load('sprites/grassTiles/1grass1.bmp'),
+    WATER: pygame.image.load('sprites/waterTiles/13water3.bmp'),
+    COAL: pygame.image.load('sprites/earthTiles/32earth2.bmp')
+}
 fpsClock = pygame.time.Clock()
 pygame.font.init()
 INVFONT = ""
