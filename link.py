@@ -1,6 +1,6 @@
 __author__ = 'joel'
 from resources import *
-
+from Items import *
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
@@ -12,7 +12,7 @@ class Player(pygame.sprite.Sprite):
             GRASS: 0,
             WATER: 0,
             COAL: 0,
-            SWORD: False,
+            SWORD: sword(),
             SHIELD: False,
             BOW: False
         }

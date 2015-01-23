@@ -1,6 +1,8 @@
 __author__ = 'joel'
 from pygame.locals import *
 
+from Items import *
+
 from map import *
 from link import Player
 
@@ -11,7 +13,6 @@ pygame.display.set_caption("Minecraft")
 
 PLAYER = Player()
 MAP = Map(PLAYER)
-
 
 while True:
 
@@ -55,7 +56,8 @@ while True:
             DISPLAYSURF.blit(textures[MAP.tilemap[row][column]], (column * TILESIZE, row * TILESIZE))
 
     DISPLAYSURF.blit(PLAYER.image, (PLAYER.Pos[0] * TILESIZE, PLAYER.Pos[1] * TILESIZE))
-
+    if type(PLAYER.inventory[SWORD]) == sword:
+        DISPLAYSURF.blit(PLAYER.inventory[SWORD].image, (PLAYER.Pos[0] * TILESIZE, PLAYER.Pos[1] * TILESIZE))
     placePosition = 10
     for item in MAP.resources:
         DISPLAYSURF.blit(textures[item], (placePosition, MAPHEIGHT * TILESIZE + 20))

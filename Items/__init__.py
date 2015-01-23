@@ -1,2 +1,2 @@
 __author__ = 'joel'
-import sword
+from sword import sword
