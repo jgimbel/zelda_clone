@@ -31,9 +31,7 @@ while True:
     MAP.draw(SCREEN)
     PLAYER.draw(SCREEN)
 
-
     dt = fpsClock.tick(24)
-
     pygame.display.update()
 
     PLAYER.update(dt)
