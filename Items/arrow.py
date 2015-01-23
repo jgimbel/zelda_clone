@@ -7,7 +7,7 @@ class arrow(pygame.sprite.Sprite):
         :return: arrow
         '''
         super(arrow, self).__init__()
-        self.image = pygame.image.load("sprites/items/arrow.png").convert_alpha()
+        self.image = pygame.image.load("Sprites/items/arrow.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.topleft = tl
         self.direction = face

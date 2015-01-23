@@ -1,14 +1,12 @@
 __author__ = 'joel'
 from pygame.locals import *
-
 from resources import *
-
 from Map import *
 from link import Player
 
 
 pygame.init()
-SCREEN = pygame.display.set_mode((CAMWIDTH * TILESIZE, CAMHEIGHT * TILESIZE + 50))
+SCREEN = pygame.display.set_mode((MAPWIDTH * TILESIZE, MAPHEIGHT * TILESIZE + 50))
 pygame.display.set_caption("Zelda Clone")
 fpsClock = pygame.time.Clock()
 PLAYER = Player()

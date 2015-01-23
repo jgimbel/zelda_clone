@@ -4,20 +4,29 @@ from pygame.locals import *
 
 from resources import *
 from Items import *
-
+from Sprites import *
 
 
 class Player(pygame.sprite.Sprite):
     speed = 125
     resources = [DIRT, GRASS, WATER, COAL]
+
     def __init__(self):
         super(pygame.sprite.Sprite, self).__init__()
-        self.image = pygame.image.load('player.png').convert_alpha()
+        self.ss = SpriteSheet('src/kavi.png')
+        self.direction = {
+            DOWN: self.ss.image_at((0, 0, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
+            UP: self.ss.image_at((0, 144, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
+            RIGHT: self.ss.image_at((0, 96, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
+            LEFT: self.ss.image_at((0, 48, 32, 48), colorkey=(0, 0, 0)).convert_alpha()
+
+        }
+        self.face = DOWN
+        self.image = self.direction[self.face]
         self.rect = self.image.get_rect()
         self.rect.topleft = [0, 0]
         self.vx = 0
         self.vy = 0
-        self.face = DOWN
         self.showBow = False
         self.charge = 0
         self.arrows = pygame.sprite.Group()
@@ -46,7 +55,6 @@ class Player(pygame.sprite.Sprite):
             self.inventory[ARROWS] -= 1
         self.charge = 0
 
-
     def update(self, dt):
         self.vx, self.vy = 0, 0
         keys = pygame.key.get_pressed()
@@ -54,18 +62,22 @@ class Player(pygame.sprite.Sprite):
         if keys[K_UP]:
             self.vy = -self.speed
             self.face = UP
+            self.image = self.direction[self.face]
             self.showBow = False
         if keys[K_DOWN]:
             self.vy =  self.speed
             self.face = DOWN
+            self.image = self.direction[self.face]
             self.showBow = True
         if keys[K_LEFT]:
             self.vx = -self.speed
             self.face = LEFT
+            self.image = self.direction[self.face]
             self.showBow = False
         if keys[K_RIGHT]:
             self.vx =  self.speed
             self.face = RIGHT
+            self.image = self.direction[self.face]
             self.showBow = False
         if keys[K_1]:
             self.equiped = SWORD
