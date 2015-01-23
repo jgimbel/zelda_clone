@@ -3,4 +3,4 @@ import pygame
 class sword(pygame.sprite.Sprite):
     def __init__(self):
         super(sword, self).__init__()
-        self.image = pygame.image.load("")
+        self.image = pygame.image.load("sword.png")
