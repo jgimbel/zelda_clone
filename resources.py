@@ -7,6 +7,10 @@ GRASS = 1
 WATER = 2
 COAL = 3
 
+SWORD = "sword"
+BOW = "bow"
+SHIELD = "shield"
+
 pygame.font.init()
 INVFONT = ""
 if sys.platform == "linux" or sys.platform == "linux2":

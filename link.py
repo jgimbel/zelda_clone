@@ -13,4 +13,7 @@ class Player(pygame.sprite.Sprite):
 			GRASS: 0,
 			WATER: 0,
 			COAL: 0
+			SWORD: False,
+			SHIELD: False,
+			BOW: False
 		}
