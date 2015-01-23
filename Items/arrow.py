@@ -2,7 +2,7 @@ __author__ = 'joel'
 from resources import *
 class arrow(pygame.sprite.Sprite):
     speed = 300
-    def __init__(self, face, tl):
+    def __init__(self, face, tl, charge):
         '''
 
         :return: arrow
@@ -14,6 +14,7 @@ class arrow(pygame.sprite.Sprite):
         self.direction = face
         self.vx = 0
         self. vy = 0
+        self.power = charge
         if self.direction == UP:
             self.vy = -self.speed
             self.image = pygame.transform.rotate(self.image, 225)

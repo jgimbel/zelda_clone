@@ -19,7 +19,7 @@ class Player(pygame.sprite.Sprite):
         self.vy = 0
         self.face = DOWN
         self.showBow = False
-
+        self.charge = 0
         self.arrows = pygame.sprite.Group()
         self.inventory = {
             DIRT: 0,
@@ -33,8 +33,12 @@ class Player(pygame.sprite.Sprite):
         }
 
     def shootArrow(self):
+        if self.charge > 50:
+            self.charge = 50
+
          if type(self.inventory[BOW]) == bow and self.inventory[ARROWS] > 0:
-            self.arrows.add(arrow(self.face, self.rect.topleft))
+            self.arrows.add(arrow(self.face, self.rect.topleft, self.charge))
+            self.charge = 0
             self.inventory[ARROWS] -= 1
 
 
@@ -58,10 +62,14 @@ class Player(pygame.sprite.Sprite):
             self.vx =  self.speed
             self.face = RIGHT
             self.showBow = False
-
+        if keys[K_SPACE]:
+            self.charge += dt
+        elif self.charge > 0:
+            self.shootArrow()
         if self.vx and self.vy:
             self.vx *= DIAG
             self.vy *= DIAG
+
 
         dt /= 1000.0
         self.rect.x += self.vx * dt
