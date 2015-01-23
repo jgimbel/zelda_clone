@@ -31,7 +31,6 @@ textures = {
     WATER: pygame.image.load('sprites/waterTiles/13water3.bmp'),
     COAL: pygame.image.load('sprites/earthTiles/32earth2.bmp')
 }
-fpsClock = pygame.time.Clock()
 pygame.font.init()
 INVFONT = ""
 if sys.platform == "linux" or sys.platform == "linux2":
