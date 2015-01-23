@@ -1,9 +1,7 @@
 __author__ = 'joel'
-
-import pygame
 import random
 from pygame.locals import *
-from resources import *
+from map import *
 from link import Player
 
 pygame.init()

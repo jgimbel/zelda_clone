@@ -6,7 +6,7 @@ class Player(pygame.sprite.Sprite):
 
 	def __init__(self):
 		super(pygame.sprite.Sprite, self).__init__()
-		self.image = pygame.image.load('player.bmp').convert_alpha()
+		self.image = pygame.image.load('player.png').convert_alpha()
 		self.Pos = [0, 0]
 		self. inventory = {
 			DIRT: 0,
