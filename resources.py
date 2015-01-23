@@ -26,10 +26,10 @@ BOW = "bow"
 SHIELD = "shield"
 ARROWS = "arrows"
 textures = {
-    DIRT: pygame.image.load('sprites/earthTiles/38earth8.bmp'),
-    GRASS: pygame.image.load('sprites/grassTiles/1grass1.bmp'),
-    WATER: pygame.image.load('sprites/waterTiles/13water3.bmp'),
-    COAL: pygame.image.load('sprites/earthTiles/32earth2.bmp')
+    DIRT: pygame.image.load('Sprites/earthTiles/38earth8.bmp'),
+    GRASS: pygame.image.load('Sprites/grassTiles/1grass1.bmp'),
+    WATER: pygame.image.load('Sprites/waterTiles/13water3.bmp'),
+    COAL: pygame.image.load('Sprites/earthTiles/32earth2.bmp')
 }
 pygame.font.init()
 INVFONT = ""
