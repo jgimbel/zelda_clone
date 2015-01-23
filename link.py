@@ -39,8 +39,8 @@ class Player(pygame.sprite.Sprite):
 
         if type(self.inventory[BOW]) == bow and self.inventory[ARROWS] > 0:
             self.arrows.add(arrow(self.face, self.rect.topleft, self.charge))
-            self.charge = 0
             self.inventory[ARROWS] -= 1
+        self.charge = 0
 
 
     def update(self, dt):
