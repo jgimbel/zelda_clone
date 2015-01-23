@@ -3,7 +3,7 @@ import random
 from pygame.locals import *
 from map import *
 from link import Player
-
+from Items import *
 pygame.init()
 DISPLAYSURF = pygame.display.set_mode((MAPWIDTH * TILESIZE, MAPHEIGHT * TILESIZE + 1000))
 pygame.display.set_caption("Minecraft")
