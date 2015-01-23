@@ -69,10 +69,8 @@ class Player(pygame.sprite.Sprite):
             self.showBow = False
         if keys[K_1]:
             self.equiped = SWORD
-            print self.equiped
         if keys[K_2]:
             self.equiped = BOW
-            print self.equiped
 
         if keys[K_SPACE]:
             if self.equiped == BOW:
@@ -100,13 +98,13 @@ class Player(pygame.sprite.Sprite):
         SCREEN.blit(self.image, self.rect)
         self.arrows.draw(SCREEN)
 
-        if type(self.inventory[SWORD]) == sword and ((self.face == DOWN or self.face == RIGHT) and self.charge == 0) or (self.charge > 0 and self.equiped == SWORD):
+        if type(self.inventory[SWORD]) == sword and self.equiped == SWORD:
             SCREEN.blit(self.inventory[SWORD].image, (self.rect.topleft[0], self.rect.topleft[1] + 10))
 
-        if type(self.inventory[SHIELD]) == shield and (self.face == DOWN or self.face == LEFT) and self.charge == 0:
+        if type(self.inventory[SHIELD]) == shield and self.charge == 0:
             SCREEN.blit(self.inventory[SHIELD].image, (self.rect[0] + 10, self.rect[1] + 14))
 
-        if type(self.inventory[BOW]) == bow and (self.face == UP or (self.charge > 0 and self.equiped == BOW)):
+        if type(self.inventory[BOW]) == bow and self.equiped == BOW:
             SCREEN.blit(self.inventory[BOW].image, (self.rect[0] + 8, self.rect[1] + 11))
 
         '''
