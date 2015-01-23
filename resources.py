@@ -4,6 +4,11 @@ import sys
 
 import pygame
 
+speed = 150
+DOWN = 0
+UP = 1
+RIGHT = 2
+LEFT = 3
 
 DIRT = 0
 GRASS = 1

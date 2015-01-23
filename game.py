@@ -23,9 +23,8 @@ while True:
         elif event.type == KEYDOWN:
 
             if event.key == K_SPACE:
-                tile = MAP.tilemap[PLAYER.Pos[1]][PLAYER.Pos[0]]
-                PLAYER.inventory[tile] += 1
-                MAP.tilemap[PLAYER.Pos[1]][PLAYER.Pos[0]] = DIRT
+                if type(PLAYER.inventory[BOW]) == arrow:
+                    
 
             if event.key == K_1:
                 MAP.placeBlock(DIRT)

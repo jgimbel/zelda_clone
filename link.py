@@ -10,7 +10,7 @@ from Items import *
 DIAG = 1 / math.sqrt(2)
 
 class Player(pygame.sprite.Sprite):
-    speed = 150
+
     def __init__(self):
         super(pygame.sprite.Sprite, self).__init__()
         self.image = pygame.image.load('player.png').convert_alpha()
@@ -18,6 +18,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.topleft = [0, 0]
         self.vx = 0
         self.vy = 0
+        self.face = DOWN
         self.inventory = {
             DIRT: 0,
             GRASS: 0,
@@ -33,17 +34,21 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         if keys[K_UP]:
             self.vy = -self.speed
+            self.face = UP
         if keys[K_DOWN]:
             self.vy =  self.speed
+            self.face = DOWN
         if keys[K_LEFT]:
             self.vx = -self.speed
+            self.face = LEFT
         if keys[K_RIGHT]:
             self.vx =  self.speed
+            self.face = RIGHT
 
         if self.vx and self.vy:
             self.vx *= DIAG
             self.vy *= DIAG
 
-        dt = dt / 1000.0
+        dt /= 1000.0
         self.rect.x += self.vx * dt
         self.rect.y += self.vy * dt
