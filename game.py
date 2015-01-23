@@ -1,7 +1,8 @@
 __author__ = 'joel'
 from pygame.locals import *
+import pygame
 
-from map import *
+from Map import *
 from link import Player
 
 
