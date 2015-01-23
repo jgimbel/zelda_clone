@@ -4,7 +4,7 @@ from pygame.locals import *
 
 from resources import *
 from Items import *
-from Sprites import *
+from sprites import *
 
 
 class Player(pygame.sprite.Sprite):
