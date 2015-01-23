@@ -100,8 +100,6 @@ class Player(pygame.sprite.Sprite):
 
         if type(self.inventory[SWORD]) == sword and self.equiped == SWORD:
             SCREEN.blit(self.inventory[SWORD].image, (self.rect.topleft[0], self.rect.topleft[1] + 10))
-
-        if type(self.inventory[SHIELD]) == shield and self.charge == 0:
             SCREEN.blit(self.inventory[SHIELD].image, (self.rect[0] + 10, self.rect[1] + 14))
 
         if type(self.inventory[BOW]) == bow and self.equiped == BOW:
