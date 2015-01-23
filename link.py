@@ -4,7 +4,7 @@ from pygame.locals import *
 
 from resources import *
 from Items import *
-from sprites import *
+from Sprites import *
 
 
 class Player(pygame.sprite.Sprite):
@@ -13,7 +13,7 @@ class Player(pygame.sprite.Sprite):
 
     def __init__(self):
         super(pygame.sprite.Sprite, self).__init__()
-        self.ss = SpriteSheet('src/kavi.png')
+        self.ss = SpriteSheet('src/player.png')
         self.direction = {
             DOWN: self.ss.image_at((0, 0, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
             UP: self.ss.image_at((0, 144, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
