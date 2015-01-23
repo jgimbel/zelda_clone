@@ -24,7 +24,6 @@ for rw in range(MAPHEIGHT):
 
 PLAYER = Player()
 
-
 def placeBlock(block):
 	
 	if PLAYER.inventory[block] > 0:
@@ -54,20 +53,24 @@ while True:
 				
 			if(event.key == K_DOWN) and PLAYER.Pos[1] < (MAPHEIGHT) - 1:
 				PLAYER.Pos[1] += 1
+
 			if event.key == K_SPACE:
 				tile = tilemap[PLAYER.Pos[1]][PLAYER.Pos[0]]
 				PLAYER.inventory[tile] += 1
 				tilemap[PLAYER.Pos[1]][PLAYER.Pos[0]] = DIRT
+
 			if event.key == K_1:
 				placeBlock(DIRT)
+
 			if event.key == K_2:
 				placeBlock(GRASS)
+
 			if event.key == K_3:
 				placeBlock(WATER)
+
 			if event.key == K_4:
 				placeBlock(COAL)
 				
-			
 	for row in range(MAPHEIGHT):
 		for column in range(MAPWIDTH):
 			DISPLAYSURF.blit(textures[tilemap[row][column]], (column*TILESIZE, row*TILESIZE))
@@ -81,5 +84,6 @@ while True:
 		textObj = INVFONT.render(str(PLAYER.inventory[item]), True, WHITE, BLACK)
 		DISPLAYSURF.blit(textObj, (placePosition, MAPHEIGHT*TILESIZE+20))
 		placePosition += 50
+
 	pygame.display.update()
 	fpsClock.tick(24)
