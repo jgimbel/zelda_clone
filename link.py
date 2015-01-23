@@ -63,10 +63,12 @@ class Player(pygame.sprite.Sprite):
             self.vx =  self.speed
             self.face = RIGHT
             self.showBow = False
+
         if keys[K_SPACE]:
             self.charge += dt
         elif self.charge > 0:
             self.shootArrow()
+
         if self.vx and self.vy:
             self.vx *= DIAG
             self.vy *= DIAG
@@ -87,7 +89,7 @@ class Player(pygame.sprite.Sprite):
         if type(self.inventory[SHIELD]) == shield and (self.face == DOWN or self.face == LEFT):
             SCREEN.blit(self.inventory[SHIELD].image, (self.rect[0] + 10, self.rect[1] + 14))
 
-        if type(self.inventory[SHIELD]) == shield and self.face == UP:
+        if type(self.inventory[BOW]) == bow and (self.face == UP or self.charge > 0):
             SCREEN.blit(self.inventory[BOW].image, (self.rect[0] + 8, self.rect[1] + 11))
 
         '''
