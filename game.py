@@ -1,11 +1,13 @@
 __author__ = 'joel'
 import random
 from pygame.locals import *
+
 from map import *
 from link import Player
 
+
 pygame.init()
-DISPLAYSURF = pygame.display.set_mode((MAPWIDTH * TILESIZE, MAPHEIGHT * TILESIZE + 1000))
+DISPLAYSURF = pygame.display.set_mode((MAPWIDTH * TILESIZE, MAPHEIGHT * TILESIZE + 50))
 pygame.display.set_caption("Minecraft")
 
 for rw in range(MAPHEIGHT):
