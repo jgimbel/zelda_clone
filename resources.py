@@ -1,6 +1,7 @@
 __author__ = 'joel'
 
-import pygame, sys
+import pygame
+import sys
 
 DIRT = 0
 GRASS = 1
