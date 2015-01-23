@@ -1,10 +1,10 @@
 __author__ = 'joel'
 
 import sys
+import math
 
 import pygame
-
-speed = 150
+DIAG = 1 / math.sqrt(2)
 DOWN = 0
 UP = 1
 RIGHT = 2

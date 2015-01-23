@@ -1,5 +1,4 @@
 __author__ = 'joel'
-import math
 
 from pygame.locals import *
 
@@ -7,9 +6,9 @@ from resources import *
 from Items import *
 
 
-DIAG = 1 / math.sqrt(2)
 
 class Player(pygame.sprite.Sprite):
+    speed = 150
 
     def __init__(self):
         super(pygame.sprite.Sprite, self).__init__()
@@ -19,6 +18,7 @@ class Player(pygame.sprite.Sprite):
         self.vx = 0
         self.vy = 0
         self.face = DOWN
+        self.arrows = pygame.sprite.Group()
         self.inventory = {
             DIRT: 0,
             GRASS: 0,
@@ -26,12 +26,16 @@ class Player(pygame.sprite.Sprite):
             COAL: 0,
             SWORD: sword(),
             SHIELD: shield(),
-            BOW: False
+            BOW: arrow(self.face)
         }
 
     def update(self, dt):
         self.vx, self.vy = 0, 0
         keys = pygame.key.get_pressed()
+        if keys[K_SPACE]:
+                if type(self.inventory[BOW]) == arrow:
+                    self.arrows.append(arrow(self.face))
+
         if keys[K_UP]:
             self.vy = -self.speed
             self.face = UP
@@ -52,3 +56,4 @@ class Player(pygame.sprite.Sprite):
         dt /= 1000.0
         self.rect.x += self.vx * dt
         self.rect.y += self.vy * dt
+        self.arrows.update(dt)

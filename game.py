@@ -22,10 +22,6 @@ while True:
             sys.exit()
         elif event.type == KEYDOWN:
 
-            if event.key == K_SPACE:
-                if type(PLAYER.inventory[BOW]) == arrow:
-                    
-
             if event.key == K_1:
                 MAP.placeBlock(DIRT)
 
