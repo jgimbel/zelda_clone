@@ -117,6 +117,13 @@ class Player(pygame.sprite.Sprite):
 
     def draw(self, SCREEN, rect):
         #Might want to draw the shield behind the player
+        if self.face == UP and self.equiped == SWORD:
+            if not self.inventory[SWORD].isDown:
+                SCREEN.blit(self.inventory[SWORD].image, (rect[0] + 20, rect[1] + 16))
+            else:
+                SCREEN.blit(self.inventory[SWORD].image, (rect[0] + 20, rect[1] + 22))
+            SCREEN.blit(self.inventory[SHIELD].image, (rect[0], rect[1] + 20))
+
         if self.face == RIGHT and self.equiped == SWORD:
             SCREEN.blit(self.inventory[SHIELD].image, (rect[0]+ 10, rect[1] + 20))
 
@@ -133,19 +140,12 @@ class Player(pygame.sprite.Sprite):
                     SCREEN.blit(self.inventory[SWORD].image, (rect[0] + 16, rect[1] + 16))
                 else:
                     SCREEN.blit(self.inventory[SWORD].image, (rect[0] + 16, rect[1] + 22))
-            elif  self.face == UP:
-                if not self.inventory[SWORD].isDown:
-                    SCREEN.blit(self.inventory[SWORD].image, (rect[0] + 20, rect[1] + 16))
-                else:
-                    SCREEN.blit(self.inventory[SWORD].image, (rect[0] + 20, rect[1] + 22))
 
             if self.face == LEFT:
                 SCREEN.blit(self.inventory[SHIELD].image, (rect[0]+ 10, rect[1] + 20))
 
             elif self.face == DOWN:
                 SCREEN.blit(self.inventory[SHIELD].image, (rect[0]+ 20, rect[1] + 20))
-            elif self.face == UP:
-                SCREEN.blit(self.inventory[SHIELD].image, (rect[0], rect[1] + 20))
 
 
         if type(self.inventory[BOW]) == bow and self.equiped == BOW:
