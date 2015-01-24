@@ -6,6 +6,7 @@ class tile(pygame.sprite.Sprite):
     def __init__(self, type, tl):
         super(tile, self).__init__()
         self.image = textures[type]
+        self.blocked = False
 
         self.rect = self.image.get_rect()
         self.rect.topleft = tl
