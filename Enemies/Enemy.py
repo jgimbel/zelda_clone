@@ -1,8 +1,5 @@
 __author__ = 'joel'
-import math
-
 from resources import *
-
 
 class enemy(pygame.sprite.Sprite):
     speed = 100

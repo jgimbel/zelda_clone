@@ -27,7 +27,6 @@ class Player(pygame.sprite.Sprite):
         self.rect.topleft = [50, 50]
         self.vx = 0
         self.vy = 0
-        self.showBow = False
         self.charge = 0
         self.arrows = pygame.sprite.Group()
         self.equiped = BOW
@@ -64,24 +63,29 @@ class Player(pygame.sprite.Sprite):
             self.vy = -self.speed
             self.face = UP
             self.image = self.direction[self.face]
-            self.showBow = False
+            self.inventory[SWORD].reverse()
+
         if keys[K_DOWN]:
             self.vy =  self.speed
             self.face = DOWN
             self.image = self.direction[self.face]
-            self.showBow = True
+            self.inventory[SWORD].normal()
+
         if keys[K_LEFT]:
             self.vx = -self.speed
             self.face = LEFT
             self.image = self.direction[self.face]
-            self.showBow = False
+            self.inventory[SWORD].normal()
+
         if keys[K_RIGHT]:
             self.vx =  self.speed
             self.face = RIGHT
             self.image = self.direction[self.face]
-            self.showBow = False
+            self.inventory[SWORD].reverse()
+
         if keys[K_1]:
             self.equiped = SWORD
+
         if keys[K_2]:
             self.equiped = BOW
 
@@ -106,25 +110,43 @@ class Player(pygame.sprite.Sprite):
         self.rect.x += self.vx * dt
         self.rect.y += self.vy * dt
         self.arrows.update(dt)
-
-        self.inventory[SWORD].rect = pygame.Rect(self.rect.topleft[0], self.rect.topleft[1] + 10, 16, 16)
+        if self.face == DOWN or self.face == LEFT:
+            self.inventory[SWORD].rect = pygame.Rect(self.rect.topleft[0], self.rect.topleft[1] + 15, 16, 16)
+        if self.face == UP or self.face == RIGHT:
+            self.inventory[SWORD].rect = pygame.Rect(self.rect.topleft[0] + 20, self.rect.topleft[1] + 15, 16, 16)
 
     def draw(self, SCREEN, rect):
-        #self.rect = rect
-        SCREEN.blit(self.image, rect)
+        #Might want to draw the shield behind the player
+        if self.face == RIGHT and self.equiped == SWORD:
+            SCREEN.blit(self.inventory[SHIELD].image, (rect[0]+ 10, rect[1] + 20))
 
+        SCREEN.blit(self.image, rect)
         if type(self.inventory[SWORD]) == sword and self.equiped == SWORD:
-            SCREEN.blit(self.inventory[SWORD].image, (rect[0] + 10, rect[1] + 5))
-            SCREEN.blit(self.inventory[SHIELD].image, (rect[0] + 10, rect[1] + 14))
+            if self.face == DOWN or self.face == LEFT:
+                if not self.inventory[SWORD].isDown:
+                    SCREEN.blit(self.inventory[SWORD].image, (rect[0], rect[1] + 16))
+                else:
+                    SCREEN.blit(self.inventory[SWORD].image, (rect[0], rect[1] + 22))
+
+            elif self.face == RIGHT:
+                if not self.inventory[SWORD].isDown:
+                    SCREEN.blit(self.inventory[SWORD].image, (rect[0] + 16, rect[1] + 16))
+                else:
+                    SCREEN.blit(self.inventory[SWORD].image, (rect[0] + 16, rect[1] + 22))
+            elif  self.face == UP:
+                if not self.inventory[SWORD].isDown:
+                    SCREEN.blit(self.inventory[SWORD].image, (rect[0] + 20, rect[1] + 16))
+                else:
+                    SCREEN.blit(self.inventory[SWORD].image, (rect[0] + 20, rect[1] + 22))
+
+            if self.face == LEFT:
+                SCREEN.blit(self.inventory[SHIELD].image, (rect[0]+ 10, rect[1] + 20))
+
+            elif self.face == DOWN:
+                SCREEN.blit(self.inventory[SHIELD].image, (rect[0]+ 20, rect[1] + 20))
+            elif self.face == UP:
+                SCREEN.blit(self.inventory[SHIELD].image, (rect[0], rect[1] + 20))
+
 
         if type(self.inventory[BOW]) == bow and self.equiped == BOW:
             SCREEN.blit(self.inventory[BOW].image, (rect[0] + 8, rect[1] + 11))
-        '''
-        placePosition = 10
-        for item in self.resources:
-            SCREEN.blit(textures[item], (placePosition, MAPHEIGHT * TILESIZE + 20))
-            placePosition += 30
-            textObj = INVFONT.render(str(self.inventory[item]), True, WHITE, BLACK)
-            SCREEN.blit(textObj, (placePosition, MAPHEIGHT * TILESIZE + 20))
-            placePosition += 50
-        '''
