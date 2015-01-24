@@ -1,6 +1,6 @@
 __author__ = 'joel'
 from resources import *
-
+from Map.Tile import tile
 class enemy(pygame.sprite.Sprite):
     speed = 100
     def __init__(self, sprite, x, y):
