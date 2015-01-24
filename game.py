@@ -27,9 +27,13 @@ while True:
     #UPDATE ALL THE THINGS!!
     dt = fpsClock.tick(24)
     pygame.display.update()
-    PLAYER.update(dt, MAP.tilemap)
+    alive = PLAYER.update(dt, MAP.tilemap)
     ENEMIES.update(PLAYER, dt, PLAYER.arrows, MAP.tilemap)
     CAM.update(PLAYER.rect)
+
+    if not alive:
+        pygame.quit()
+        sys.exit()
 
     # GET ALL THE EVENTS
     for event in pygame.event.get():

@@ -13,7 +13,7 @@ class Player(pygame.sprite.Sprite):
     resources = [DIRT, GRASS, WATER, COAL]
 
     def __init__(self):
-        super(pygame.sprite.Sprite, self).__init__()
+        super(Player, self).__init__()
         self.ss = SpriteSheet('src/player.png')
         self.direction = {
             DOWN: self.ss.image_at((0, 0, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
@@ -29,6 +29,8 @@ class Player(pygame.sprite.Sprite):
         self.vx = 0
         self.vy = 0
         self.charge = 0
+        self.hearts = 10
+        self.maxhearts = 10
         self.arrows = pygame.sprite.Group()
         self.equiped = BOW
         self.inventory = {
@@ -125,6 +127,21 @@ class Player(pygame.sprite.Sprite):
                         self.rect.top = rect.bottom
                     if self.rect.bottom >= rect.top >= prev_rect.bottom:
                         self.rect.bottom = rect.top
+        for enemy in pygame.sprite.spritecollide(self, ENEMIES, False):
+                rect = sprite.rect
+                if self.rect.left <= rect.right <= prev_rect.left :
+                    rect.left = self.rect.right
+                if self.rect.right >= rect.left >= prev_rect.right:
+                    rect.right = self.rect.left
+
+                if self.rect.top <= rect.bottom <= prev_rect.top :
+                    rect.top = self.rect.bottom
+                if self.rect.bottom >= rect.top >= prev_rect.bottom:
+                    rect.bottom = self.rect.top
+                self.hearts -= 0.5
+                if self.hearts == 0:
+                    self.kill()
+                    return False
 
 
         self.arrows.update(dt, walls)
@@ -132,6 +149,7 @@ class Player(pygame.sprite.Sprite):
             self.inventory[SWORD].rect = pygame.Rect(self.rect.topleft[0], self.rect.topleft[1] + 15, 16, 16)
         if self.face == UP or self.face == RIGHT:
             self.inventory[SWORD].rect = pygame.Rect(self.rect.topleft[0] + 20, self.rect.topleft[1] + 15, 16, 16)
+        return True
 
     def draw(self, SCREEN, rect):
         #Might want to draw the shield behind the player
