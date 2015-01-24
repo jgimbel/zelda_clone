@@ -30,7 +30,7 @@ class enemy(pygame.sprite.Sprite):
         return x/norm, y/norm
 
 
-    def update(self, target, dt, weapons, walls):
+    def update(self, target, dt, weapons, walls, player):
         for col in pygame.sprite.spritecollide(self, weapons, True):
             self.kill()
 
@@ -56,6 +56,22 @@ class enemy(pygame.sprite.Sprite):
                         self.rect.top = rect.bottom
                     if self.rect.bottom >= rect.top >= prev_rect.bottom:
                         self.rect.bottom = rect.top
+
+        if pygame.sprite.collide_rect(self, player):
+                if not self.attacking:
+                    self.attack()
+                    rect = player.rect
+                    if self.rect.left <= rect.right <= prev_rect.left :
+                        self.rect.left = rect.right
+                    if self.rect.right >= rect.left >= prev_rect.right:
+                        self.rect.right = rect.left
+
+                    if self.rect.top <= rect.bottom <= prev_rect.top :
+                        self.rect.top = rect.bottom
+                    if self.rect.bottom >= rect.top >= prev_rect.bottom:
+                        self.rect.bottom = rect.top
+
+                    player.hearts -= 0.5
 
     def draw(self, SCREEN, rect):
         SCREEN.blit(self.image, rect)

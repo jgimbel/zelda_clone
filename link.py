@@ -128,27 +128,6 @@ class Player(pygame.sprite.Sprite):
                     if self.rect.bottom >= rect.top >= prev_rect.bottom:
                         self.rect.bottom = rect.top
 
-        for enemy in pygame.sprite.spritecollide(self, ENEMIES, False):
-                if not enemy.attacking:
-                    rect = enemy.rect
-                    if self.rect.left <= rect.right <= prev_rect.left :
-                        self.rect.left = rect.right
-                    if self.rect.right >= rect.left >= prev_rect.right:
-                        self.rect.right = rect.left
-                    if self.rect.top <= rect.bottom <= prev_rect.top :
-                        self.rect.top = rect.bottom
-                    if self.rect.bottom >= rect.top >= prev_rect.bottom:
-                        self.rect.bottom = rect.top
-
-                    enemy.rect = rect
-                    enemy.attack()
-
-                    self.hearts -= 0.5
-                    print self.hearts
-                    if self.hearts == 0:
-                        self.kill()
-                        return False
-
 
         self.arrows.update(dt, walls)
         if self.face == DOWN or self.face == LEFT:

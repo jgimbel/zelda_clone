@@ -28,7 +28,7 @@ while True:
     dt = fpsClock.tick(24)
     pygame.display.update()
     alive = PLAYER.update(dt, MAP.tilemap)
-    ENEMIES.update(PLAYER, dt, PLAYER.arrows, MAP.tilemap)
+    ENEMIES.update(PLAYER, dt, PLAYER.arrows, MAP.tilemap, PLAYER)
     CAM.update(PLAYER.rect)
 
     if not alive:
