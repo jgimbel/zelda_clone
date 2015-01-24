@@ -14,6 +14,7 @@ class Map:
                 randomNumber = random.randint(0, 15)
                 if randomNumber == 0:
                     t = COAL
+                    tile.blocked = True
                 elif randomNumber == 1 or randomNumber == 2:
                     t = WATER
                 elif 3 <= randomNumber <= 7:
