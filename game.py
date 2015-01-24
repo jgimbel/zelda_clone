@@ -2,7 +2,6 @@ __author__ = 'joel'
 from pygame.locals import *
 
 from Enemies import *
-
 from resources import *
 from Map import *
 from link import Player
@@ -28,7 +27,7 @@ while True:
     #UPDATE ALL THE THINGS!!
     dt = fpsClock.tick(24)
     pygame.display.update()
-    PLAYER.update(dt)
+    PLAYER.update(dt, MAP.tilemap)
 
     ENEMIES.update(PLAYER, dt, PLAYER.arrows)
     CAM.update(PLAYER.rect)

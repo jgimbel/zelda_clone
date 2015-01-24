@@ -55,7 +55,7 @@ class Player(pygame.sprite.Sprite):
             self.inventory[ARROWS] -= 1
         self.charge = 0
 
-    def update(self, dt):
+    def update(self, dt, walls):
         self.vx, self.vy = 0, 0
         keys = pygame.key.get_pressed()
 
@@ -109,6 +109,10 @@ class Player(pygame.sprite.Sprite):
         dt /= 1000.0
         self.rect.x += self.vx * dt
         self.rect.y += self.vy * dt
+        for tile in pygame.sprite.spritecollider(self, walls, False):
+            if tile.blocked:
+                pass
+
         self.arrows.update(dt)
         if self.face == DOWN or self.face == LEFT:
             self.inventory[SWORD].rect = pygame.Rect(self.rect.topleft[0], self.rect.topleft[1] + 15, 16, 16)
