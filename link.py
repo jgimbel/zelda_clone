@@ -108,22 +108,25 @@ class Player(pygame.sprite.Sprite):
 
 
         dt /= 1000.0
+        prev_rect = self.rect.copy()
         self.rect.x += self.vx * dt
         self.rect.y += self.vy * dt
         for sprite in pygame.sprite.spritecollide(self, walls, False):
             if type(sprite) == tile:
-                print sprite.blocked
                 if sprite.blocked:
-                    if sprite.rect.x < self.rect.x < sprite.rect.x + sprite.rect.size[0]:
-                        if self.rect.x < sprite.rect.x + (sprite.rect.size[0] / 2):
-                            self.rect.x = sprite.rect.x - 1
-                        else:
-                            self.rect.x = sprite.rect.x + sprite.rect.size[0] + 1
-                    elif sprite.rect.y < self.rect.y < sprite.rect.y + sprite.rect.size[1]:
-                        if self.rect.y < sprite.rect.y + (sprite.rect.size[1] / 2):
-                            self.rect.y = sprite.rect.y - 1
-                        else:
-                            self.rect.y = sprite.rect.y + sprite.rect.size[1] + 1
+                    # collide with walls
+                    rect = sprite.rect
+                    if self.rect.left <= rect.right <= prev_rect.left :
+                        self.rect.left = rect.right
+                    if self.rect.right >= rect.left >= prev_rect.right:
+                        self.rect.right = rect.left
+
+                    if self.rect.top <= rect.bottom <= prev_rect.top :
+                        self.rect.top = rect.bottom
+                    if self.rect.bottom >= rect.top >= prev_rect.bottom:
+                        self.rect.bottom = rect.top
+
+
         self.arrows.update(dt)
         if self.face == DOWN or self.face == LEFT:
             self.inventory[SWORD].rect = pygame.Rect(self.rect.topleft[0], self.rect.topleft[1] + 15, 16, 16)

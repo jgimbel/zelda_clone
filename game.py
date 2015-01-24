@@ -29,7 +29,7 @@ while True:
     pygame.display.update()
     PLAYER.update(dt, MAP.tilemap)
 
-    ENEMIES.update(PLAYER, dt, PLAYER.arrows)
+    ENEMIES.update(PLAYER, dt, PLAYER.arrows, MAP.tilemap)
     CAM.update(PLAYER.rect)
 
     # GET ALL THE EVENTS
