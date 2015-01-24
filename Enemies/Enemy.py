@@ -15,6 +15,10 @@ class enemy(pygame.sprite.Sprite):
         self.image = self.direction[DOWN]
         self.rect = self.image.get_rect()
         self.rect.topleft = [x, y]
+        self.attacking = False
+
+    def attack(self):
+        pass
 
     def vector_length(self, x, y):
         return math.sqrt(x*x + y*y)
