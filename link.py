@@ -109,10 +109,18 @@ class Player(pygame.sprite.Sprite):
         dt /= 1000.0
         self.rect.x += self.vx * dt
         self.rect.y += self.vy * dt
-        for tile in pygame.sprite.spritecollider(self, walls, False):
+        for tile in pygame.sprite.spritecollide(self, walls, False):
             if tile.blocked:
-                pass
-
+                if tile.rect.x < self.rect.x < tile.rect.x + tile.rect.size[0]:
+                    if self.rect.x < tile.rect.x + (tile.rect.size[0] / 2):
+                        self.rect.x = tile.rect.x - 1
+                    else:
+                        self.rect.x = tile.rect.x + tile.rect.size[0] + 1
+                elif tile.rect.y < self.rect.y < tile.rect.y + tile.rect.size[1]:
+                    if self.rect.y < tile.rect.y + (tile.rect.size[1] / 2):
+                        self.rect.y = tile.rect.y - 1
+                    else:
+                        self.rect.y = tile.rect.y + tile.rect.size[1] + 1
         self.arrows.update(dt)
         if self.face == DOWN or self.face == LEFT:
             self.inventory[SWORD].rect = pygame.Rect(self.rect.topleft[0], self.rect.topleft[1] + 15, 16, 16)
