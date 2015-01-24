@@ -28,7 +28,6 @@ while True:
     dt = fpsClock.tick(24)
     pygame.display.update()
     PLAYER.update(dt, MAP.tilemap)
-
     ENEMIES.update(PLAYER, dt, PLAYER.arrows, MAP.tilemap)
     CAM.update(PLAYER.rect)
 

@@ -127,7 +127,7 @@ class Player(pygame.sprite.Sprite):
                         self.rect.bottom = rect.top
 
 
-        self.arrows.update(dt)
+        self.arrows.update(dt, walls)
         if self.face == DOWN or self.face == LEFT:
             self.inventory[SWORD].rect = pygame.Rect(self.rect.topleft[0], self.rect.topleft[1] + 15, 16, 16)
         if self.face == UP or self.face == RIGHT:

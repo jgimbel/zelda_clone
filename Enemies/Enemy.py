@@ -34,6 +34,7 @@ class enemy(pygame.sprite.Sprite):
         t = self.normalize_vector(d[0] ,d[1])
 
         dt /= 1000.0
+        prev_rect = self.rect.copy()
         self.rect.x -= t[0] * self.speed * dt
         self.rect.y -= t[1] * self.speed * dt
 

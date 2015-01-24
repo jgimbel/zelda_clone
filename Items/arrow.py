@@ -1,5 +1,6 @@
 __author__ = 'joel'
 from resources import *
+from Map.Tile import tile
 class arrow(pygame.sprite.Sprite):
     def __init__(self, face, tl, charge):
         '''
@@ -28,13 +29,16 @@ class arrow(pygame.sprite.Sprite):
             self.vx = self.speed
             self.image = pygame.transform.rotate(self.image, 315)
 
-    def update(self, dt):
+    def update(self, dt, walls):
         self.rect.x += self.vx * dt
         self.rect.y += self.vy * dt
         self.distance += dt
         self.speed -= 10
         if self.distance > self.speed:
             self.kill()
+        for sprite in pygame.sprite.spritecollide(self, walls, False):
+            if type(sprite) == tile and sprite.blocked:
+                self.kill()
 
     def draw(self, SCREEN, rect):
         SCREEN.blit(self.image, rect)
