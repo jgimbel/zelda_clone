@@ -1,9 +1,10 @@
 __author__ = 'joel'
 import random
 
+from pygame import Rect
+
 from resources import *
 from Tile import tile
-
 class Map:
     tilemap = pygame.sprite.Group()
     def __init__(self, player):
@@ -24,6 +25,9 @@ class Map:
 
                 self.tilemap.add(tile(t, [cl * TILESIZE, rw * TILESIZE]))
 
-    def draw(self, SCREEN, x, y):
-        self.tilemap.update(x, y)
-        self.tilemap.draw(SCREEN)
+    def rel_rect(self, rect, parent):
+        return Rect((rect.x - parent.x, rect.y - parent.y), rect.size)
+
+    def draw(self, SCREEN, rect):
+        for t in self.tilemap:
+            t.draw(SCREEN, self.rel_rect(t.rect, rect))

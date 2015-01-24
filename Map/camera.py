@@ -17,7 +17,7 @@ class Camera(object):
 
     def draw_background(self, surf, bg):
         surf.fill(BLACK)
-        bg.draw(surf, -self.rect.x, -self.rect.y)
+        bg.draw(surf, self.rect)
 
     def rel_rect(self, rect, parent):
         return Rect((rect.x - parent.x, rect.y - parent.y), rect.size)

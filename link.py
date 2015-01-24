@@ -112,13 +112,14 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += self.vy * dt
         for sprite in pygame.sprite.spritecollide(self, walls, False):
             if type(sprite) == tile:
+                print sprite.blocked
                 if sprite.blocked:
                     if sprite.rect.x < self.rect.x < sprite.rect.x + sprite.rect.size[0]:
                         if self.rect.x < sprite.rect.x + (sprite.rect.size[0] / 2):
                             self.rect.x = sprite.rect.x - 1
                         else:
                             self.rect.x = sprite.rect.x + sprite.rect.size[0] + 1
-                    elif tile.rect.y < self.rect.y < sprite.rect.y + sprite.rect.size[1]:
+                    elif sprite.rect.y < self.rect.y < sprite.rect.y + sprite.rect.size[1]:
                         if self.rect.y < sprite.rect.y + (sprite.rect.size[1] / 2):
                             self.rect.y = sprite.rect.y - 1
                         else:
