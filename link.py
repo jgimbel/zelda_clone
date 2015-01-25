@@ -44,6 +44,10 @@ class Player(pygame.sprite.Sprite):
             BOW: bow(),
             ARROWS: 100
         }
+    def killed(self):
+        self.score += 1
+        if self.score % 4 == 0:
+            self.level += 1
 
     def swingSword(self):
         self.inventory[SWORD].swordDown()

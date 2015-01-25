@@ -21,7 +21,6 @@ MAP = Map(PLAYER)
 SCREEN = CAM.toggle_fullscreen()
 scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
 scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
-scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
 paused = False
 
 def draw():
