@@ -13,5 +13,5 @@ class scientist(enemy):
 
     def kill(self, player):
         super(scientist, self).kill(player)
-        for i in range(LEVEL):
+        for i in range(randrange(1, player.level)):
             scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))

@@ -35,7 +35,7 @@ class enemy(pygame.sprite.Sprite):
         super(enemy, self).kill()
         player.score += 1
         if player.score % 2 == 0:
-            LEVEL += 1
+            player.level += 1
 
 
     def update(self, target, dt, weapons, walls, player):

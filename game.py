@@ -21,6 +21,7 @@ def draw():
     CAM.draw_background(SCREEN, MAP)
     CAM.drawPlayer(SCREEN, PLAYER)
     CAM.drawEnemies(SCREEN, ENEMIES)
+    CAM.drawHUD(PLAYER)
 
 while True:
 

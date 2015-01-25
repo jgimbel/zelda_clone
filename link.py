@@ -16,6 +16,7 @@ class Player(pygame.sprite.Sprite):
         super(Player, self).__init__()
         self.ss = SpriteSheet('src/player.png')
         self.score = 0
+        self.level = 1
         self.direction = {
             DOWN: self.ss.image_at((0, 0, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
             UP: self.ss.image_at((0, 144, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),

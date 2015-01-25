@@ -38,6 +38,16 @@ class Camera(object):
                 r = self.rel_rect(enemy.rect, self.rect)
                 enemy.draw(surf, r)
 
+    def drawHUD(self, player):
+        screen = pygame.display.get_surface()
+        w,h = screen.get_width(),screen.get_height()
+        text = INVFONT.render("arrows: " + str(player.inventory[ARROWS])+", hearts: " + str(player.hearts) + ", Enemies: " + str(len(ENEMIES)), True, WHITE, BLACK)
+
+        hud = text.get_rect()
+        hud.topleft = [0, h - hud.size[1]]
+        hud.width = w
+        screen.blit(text, hud)
+
     def toggle_fullscreen(self):
         screen = pygame.display.get_surface()
         tmp = screen.convert()
