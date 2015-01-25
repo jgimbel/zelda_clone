@@ -50,8 +50,8 @@ class Camera(object):
 
         hearts = pygame.Surface((9, 7 * player.hearts))
         for i in range(player.hearts):
-            hr = text.get_rect()
-            hr.topleft = [0, (h - hr.size[1]) +(i * 7)]
+            hr = HEART.get_rect()
+            hr.topleft = [(i*7), 0]
             hearts.blit(HEART, hr)
         hr = hearts.get_rect()
         hr.topleft = [0, h - hud.size[1]]
