@@ -44,12 +44,14 @@ class Player(pygame.sprite.Sprite):
         }
 
     def swingSword(self):
-        self.inventory[SWORD].swordUp(self.charge)
+        self.inventory[SWORD].swordDown()
         for  enemy in pygame.sprite.spritecollide(self.inventory[SWORD], ENEMIES, False):
             if self.charge < 100:
                 enemy.hearts -= 0.5
             else:
-                enemy.hearts -= self.charge / 10 * self.inventory[SWORD].damage
+                if self.charge > 600:
+                    self.charge = 600
+                enemy.hearts -= self.charge / 600 * self.inventory[SWORD].damage
         self.charge = 0
 
     def shootArrow(self):
@@ -102,7 +104,7 @@ class Player(pygame.sprite.Sprite):
             if self.equiped == BOW:
                 self.charge += dt
             elif self.equiped == SWORD:
-                self.inventory[SWORD].swordDown()
+                self.inventory[SWORD].swordUp()
                 self.charge += dt
         elif self.charge > 0:
             if self.equiped == BOW:

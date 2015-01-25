@@ -11,8 +11,7 @@ class sword(pygame.sprite.Sprite):
         self.reversed = False
         self.handle = handle
 
-
-    def swordUp(self, charge):
+    def swordUp(self):
         if self.isDown:
             self.handle[1] -= self.rect.size[1]
             if self.reversed:
