@@ -7,9 +7,12 @@ from resources import *
 
 class Camera(object):
 
-    def __init__(self, target, bounds, size):
+    def __init__(self, target, bounds, size, h, w):
         self.bounds = bounds
         self.rect = Rect((0,0), size)
+        self.fullscreen = False
+        self.FULLH = h
+        self.FULLW = w
 
     def update(self, target, SCREEN):
         self.rect.center = target.center
@@ -65,6 +68,13 @@ class Camera(object):
 
     def toggle_fullscreen(self):
         screen = pygame.display.get_surface()
+        if self.fullscreen:
+            SCREEN = pygame.display.set_mode((CAMWIDTH * TILESIZE, CAMHEIGHT * TILESIZE + 50))
+            self.fullscreen = False
+        else:
+            SCREEN = pygame.display.set_mode((self.FULLW, self.FULLH))
+            self.fullscreen = True
+
         tmp = screen.convert()
         caption = pygame.display.get_caption()
 

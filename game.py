@@ -9,12 +9,16 @@ from Map import *
 from link import Player
 
 pygame.init()
+info = pygame.display.Info()
+w = info.current_w
+h = info.current_h
 SCREEN = pygame.display.set_mode((CAMWIDTH * TILESIZE, CAMHEIGHT * TILESIZE + 50))
 pygame.display.set_caption("Zelda Clone")
 fpsClock = pygame.time.Clock()
 PLAYER = Player()
-CAM = Camera(PLAYER, Rect((0,0), (MAPWIDTH, MAPHEIGHT)), SCREEN.subsurface((0, 40, SCREEN.get_width(), SCREEN.get_height() - 40)).get_size())
+CAM = Camera(PLAYER, Rect((0,0), (MAPWIDTH, MAPHEIGHT)), SCREEN.subsurface((0, 40, SCREEN.get_width(), SCREEN.get_height() - 40)).get_size(), h ,w)
 MAP = Map(PLAYER)
+SCREEN = CAM.toggle_fullscreen()
 scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
 scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
 scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
