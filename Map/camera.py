@@ -48,18 +48,19 @@ class Camera(object):
         hud.topleft = [0, h - hud.size[1] - 9]
         screen.blit(text, hud)
 
-        hearts = pygame.Surface((8 * player.maxhearts + 8, 9))
+        hearts = pygame.Surface((10 * player.maxhearts, 8))
 
         for i in range(int(math.ceil(player.maxhearts))):
             hr = HEART.get_rect()
-            hr.topleft = [(i*8), 0]
+            hr.topleft = [(i*10), 0]
             if i <= player.hearts:
                 hearts.blit(HEART, hr)
             else:
                 hearts.blit(EMPTY_HEART, hr)
         hr = hearts.get_rect()
         hr.topleft = [0, h - hr.size[1]]
-        screen.blit(hearts, hr)
+        hearts.set_colorkey((0,0,0), pygame.RLEACCEL)
+        screen.blit(hearts.convert_alpha(), hr)
 
 
     def toggle_fullscreen(self):
