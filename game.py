@@ -30,12 +30,14 @@ def draw():
     CAM.drawPlayer(SCREEN, PLAYER)
     CAM.drawEnemies(SCREEN, ENEMIES)
     CAM.drawHUD(PLAYER)
+    if paused:
+        CAM.draw_pause(SCREEN)
 
 while True:
     dt = fpsClock.tick(24)
+    pygame.display.update()
     if not paused:
         #UPDATE ALL THE THINGS!!
-        pygame.display.update()
         alive = PLAYER.update(dt, MAP.tilemap)
         ENEMIES.update(PLAYER, dt, PLAYER.arrows, MAP.tilemap, PLAYER)
         CAM.update(PLAYER.rect, SCREEN)
