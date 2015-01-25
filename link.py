@@ -52,7 +52,7 @@ class Player(pygame.sprite.Sprite):
             if self.charge < 100:
                 enemy.hearts -= 0.5
             else:
-                enemy.hearts -= self.charge / 100
+                enemy.hearts -= self.charge / 10
         self.charge = 0
 
     def shootArrow(self):
