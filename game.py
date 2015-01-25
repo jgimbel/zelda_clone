@@ -22,6 +22,7 @@ SCREEN = CAM.toggle_fullscreen()
 scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
 scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
 scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
+paused = False
 
 def draw():
     #CLEAR AND REDRAW SCREEN
@@ -31,13 +32,13 @@ def draw():
     CAM.drawHUD(PLAYER)
 
 while True:
-
-    #UPDATE ALL THE THINGS!!
     dt = fpsClock.tick(24)
-    pygame.display.update()
-    alive = PLAYER.update(dt, MAP.tilemap)
-    ENEMIES.update(PLAYER, dt, PLAYER.arrows, MAP.tilemap, PLAYER)
-    CAM.update(PLAYER.rect, SCREEN)
+    if not paused:
+        #UPDATE ALL THE THINGS!!
+        pygame.display.update()
+        alive = PLAYER.update(dt, MAP.tilemap)
+        ENEMIES.update(PLAYER, dt, PLAYER.arrows, MAP.tilemap, PLAYER)
+        CAM.update(PLAYER.rect, SCREEN)
 
     if not alive:
         pygame.quit()
@@ -51,4 +52,12 @@ while True:
         if event.type == KEYDOWN:
             if event.key == 102:
                 SCREEN = CAM.toggle_fullscreen()
+            if event.key == K_ESCAPE:
+                if paused:
+                    paused = False
+                else:
+                    paused = True
+            if event.key == K_BACKSPACE:
+                pygame.quit()
+                sys.exit()
     draw()
