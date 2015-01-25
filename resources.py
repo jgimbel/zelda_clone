@@ -22,6 +22,7 @@ MAPWIDTH = 30
 MAPHEIGHT = 30
 CAMHEIGHT = 10
 CAMWIDTH = 10
+SCORE = 0
 
 SWORD = "sword"
 BOW = "bow"
@@ -49,3 +50,5 @@ BLUE = (0, 0, 255)
 WHITE = (255, 255, 255)
 
 ENEMIES = pygame.sprite.Group()
+
+LEVEL = 1

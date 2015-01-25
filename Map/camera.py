@@ -1,6 +1,6 @@
 __author__ = 'joel'
 
-from pygame import Rect
+from pygame.locals import *
 
 from resources import *
 
@@ -37,3 +37,23 @@ class Camera(object):
             if self.rect.colliderect(enemy.rect):
                 r = self.rel_rect(enemy.rect, self.rect)
                 enemy.draw(surf, r)
+
+    def toggle_fullscreen(self):
+        screen = pygame.display.get_surface()
+        tmp = screen.convert()
+        caption = pygame.display.get_caption()
+
+        w,h = screen.get_width(),screen.get_height()
+        flags = screen.get_flags()
+        bits = screen.get_bitsize()
+
+        pygame.display.quit()
+        pygame.display.init()
+
+        screen = pygame.display.set_mode((w,h),flags^FULLSCREEN,bits)
+        screen.blit(tmp,(0,0))
+        pygame.display.set_caption(*caption)
+
+        pygame.key.set_mods(0) #HACK: work-a-round for a SDL bug??
+
+        return screen

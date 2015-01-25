@@ -15,6 +15,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         super(Player, self).__init__()
         self.ss = SpriteSheet('src/player.png')
+        self.score = 0
         self.direction = {
             DOWN: self.ss.image_at((0, 0, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
             UP: self.ss.image_at((0, 144, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
@@ -46,7 +47,11 @@ class Player(pygame.sprite.Sprite):
 
     def swingSword(self):
         self.inventory[SWORD].swordUp(self.charge)
-        pygame.sprite.spritecollide(self.inventory[SWORD], ENEMIES, True)
+        for  enemy in pygame.sprite.spritecollide(self.inventory[SWORD], ENEMIES, False):
+            if self.charge < 100:
+                enemy.hearts -= 0.5
+            else:
+                enemy.hearts -= self.charge / 100
         self.charge = 0
 
     def shootArrow(self):
@@ -61,6 +66,9 @@ class Player(pygame.sprite.Sprite):
     def update(self, dt, walls):
         self.vx, self.vy = 0, 0
         keys = pygame.key.get_pressed()
+        if self.hearts == 0:
+            self.kill()
+            return False
 
         if keys[K_UP]:
             self.vy = -self.speed
@@ -113,6 +121,17 @@ class Player(pygame.sprite.Sprite):
         prev_rect = self.rect.copy()
         self.rect.x += self.vx * dt
         self.rect.y += self.vy * dt
+
+        if 0 > self.rect.x:
+            self.rect.x = 0
+        if  self.rect.x > MAPWIDTH * (TILESIZE - 1):
+            self.rect.x = MAPWIDTH * (TILESIZE - 1)
+        if 0 > self.rect.y:
+            self.rect.y = 0
+        if  self.rect.y > MAPHEIGHT * (TILESIZE - 1.5):
+            self.rect.y = MAPHEIGHT * (TILESIZE - 1.5)
+
+
         for sprite in pygame.sprite.spritecollide(self, walls, False):
             if type(sprite) == tile:
                 if sprite.blocked:

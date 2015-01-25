@@ -40,4 +40,7 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == KEYDOWN:
+            if event.key == 102:
+                SCREEN = CAM.toggle_fullscreen()
     draw()

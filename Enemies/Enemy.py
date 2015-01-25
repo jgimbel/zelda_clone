@@ -3,6 +3,7 @@ from resources import *
 from Map.Tile import tile
 class enemy(pygame.sprite.Sprite):
     speed = 100
+    hearts = 5.0
     def __init__(self, sprite, x, y):
         pygame.sprite.Sprite.__init__(self, ENEMIES)
         self.sheet = sprite
@@ -16,9 +17,10 @@ class enemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.topleft = [x, y]
         self.attacking = False
+        self.attack_length = 0
 
     def attack(self):
-        pass
+        self.attack_length = 12
 
     def vector_length(self, x, y):
         return math.sqrt(x*x + y*y)
@@ -29,10 +31,24 @@ class enemy(pygame.sprite.Sprite):
             return 0, 0
         return x/norm, y/norm
 
+    def kill(self, player):
+        super(enemy, self).kill()
+        player.score += 1
+        if player.score % 2 == 0:
+            LEVEL += 1
+
 
     def update(self, target, dt, weapons, walls, player):
+        if self.hearts <= 0:
+            self.kill(player)
+
+
+        if self.attack_length > 0:
+            self.attack_length -= 1
+            return
+
         for col in pygame.sprite.spritecollide(self, weapons, True):
-            self.kill()
+            self.hearts -= col.speed / 100
 
         d = self.rect.x - target.rect.x, self.rect.y - target.rect.y
         t = self.normalize_vector(d[0] ,d[1])
