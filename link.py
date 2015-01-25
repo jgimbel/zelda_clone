@@ -160,7 +160,7 @@ class Player(pygame.sprite.Sprite):
             self.inventory[SWORD].rect.y = self.rect.y + self.inventory[SWORD].handle[1] + 32
 
         if self.face == RIGHT:
-            self.inventory[SWORD].rect.x = self.rect.x + 8
+            self.inventory[SWORD].rect.x = self.rect.x + 16
             self.inventory[SWORD].rect.y = self.rect.y + self.inventory[SWORD].handle[1]
         if self.face == LEFT:
             self.inventory[SWORD].rect.x = self.rect.x - 16
@@ -186,7 +186,7 @@ class Player(pygame.sprite.Sprite):
                 SCREEN.blit(s.image, (rect[0], rect[1] + s.handle[1] + 16))
                 SCREEN.blit(self.inventory[SHIELD].image, (rect[0]+ 20, rect[1] + 20))
             elif self.face == RIGHT:
-                SCREEN.blit(s.image, (rect[0] + 8, rect[1] + s.handle[1]))
+                SCREEN.blit(s.image, (rect[0] + 16, rect[1] + s.handle[1]))
             if self.face == LEFT:
                 SCREEN.blit(s.image, (rect[0] - 16, rect[1] + s.handle[1]))
                 SCREEN.blit(self.inventory[SHIELD].image, (rect[0]+ 10, rect[1] + 20))
