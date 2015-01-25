@@ -52,7 +52,7 @@ class enemy(pygame.sprite.Sprite):
             return
 
         for col in pygame.sprite.spritecollide(self, weapons, True):
-            self.hearts -= col.speed / 50
+            self.hearts -= col.speed / 100
 
         d = self.rect.x - target.rect.x, self.rect.y - target.rect.y
         t = self.normalize_vector(d[0] ,d[1])

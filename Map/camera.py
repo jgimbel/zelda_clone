@@ -23,6 +23,12 @@ class Camera(object):
         surf.fill(BLACK)
         bg.draw(surf, self.rect)
 
+    def draw_pause(self, surf):
+        pause = INVFONT.render("PAUSED")
+        rect = pause.get_rect()
+        rect.center = self.rect.center
+        surf.blit(pause, rect)
+
     def rel_rect(self, rect, parent):
         return Rect((rect.x - parent.x, rect.y - parent.y), rect.size)
 

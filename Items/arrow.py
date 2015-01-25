@@ -3,10 +3,6 @@ from resources import *
 from Map.Tile import tile
 class arrow(pygame.sprite.Sprite):
     def __init__(self, face, tl, charge):
-        '''
-
-        :return: arrow
-        '''
         super(arrow, self).__init__()
         self.image = pygame.image.load("Sprites/items/arrow.png").convert_alpha()
         self.rect = self.image.get_rect()

@@ -1,5 +1,7 @@
 __author__ = 'joel'
 
+from random import randrange
+
 from pygame.locals import *
 
 from resources import *
@@ -28,7 +30,7 @@ class Player(pygame.sprite.Sprite):
         self.face = DOWN
         self.image = self.direction[self.face]
         self.rect = self.image.get_rect()
-        self.rect.topleft = [50, 50]
+        self.rect.topleft = [randrange(0, MAPHEIGHT * TILESIZE), randrange(0, MAPWIDTH * TILESIZE)]
         self.vx = 0
         self.vy = 0
         self.charge = 0
@@ -55,11 +57,12 @@ class Player(pygame.sprite.Sprite):
         self.charge = 0
 
     def shootArrow(self):
-        if self.charge > 250:
-            self.charge = 250
+        if self.charge > 600:
+            self.charge = 600
 
         if type(self.inventory[BOW]) == bow and self.inventory[ARROWS] > 0:
-            self.arrows.add(arrow(self.face, self.rect.center, self.charge))
+            tl = self.rect.topleft
+            self.arrows.add(arrow(self.face,[tl[0] + 8, tl[1] + 16] , self.charge))
             self.inventory[ARROWS] -= 1
         self.charge = 0
 
