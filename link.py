@@ -154,16 +154,16 @@ class Player(pygame.sprite.Sprite):
         self.arrows.update(dt, walls)
         if self.face == UP:
             self.inventory[SWORD].rect.x = self.rect.x
-            self.inventory[SWORD].rect.y = self.rect.y + self.inventory[SWORD].handle[1] - 24
+            self.inventory[SWORD].rect.y = self.rect.y + self.inventory[SWORD].handle[1] - 24  - self.rect.size[1]
         if self.face == DOWN:
             self.inventory[SWORD].rect.x = self.rect.x
-            self.inventory[SWORD].rect.y = self.rect.y + self.inventory[SWORD].handle[1] + 32
+            self.inventory[SWORD].rect.y = self.rect.y + self.inventory[SWORD].handle[1] + 32 - self.rect.size[1]
 
         if self.face == RIGHT:
-            self.inventory[SWORD].rect.x = self.rect.x + 16
+            self.inventory[SWORD].rect.x = self.rect.x + 16  + self.rect.size[0]
             self.inventory[SWORD].rect.y = self.rect.y + self.inventory[SWORD].handle[1]
         if self.face == LEFT:
-            self.inventory[SWORD].rect.x = self.rect.x - 16
+            self.inventory[SWORD].rect.x = self.rect.x - 16 - self.rect.size[0]
             self.inventory[SWORD].rect.y = self.rect.y + self.inventory[SWORD].handle[1]
 
         return True
