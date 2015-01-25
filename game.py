@@ -16,6 +16,8 @@ PLAYER = Player()
 CAM = Camera(PLAYER, Rect((0,0), (MAPWIDTH, MAPHEIGHT)), SCREEN.subsurface((0, 40, SCREEN.get_width(), SCREEN.get_height() - 40)).get_size())
 MAP = Map(PLAYER)
 scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
+scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
+scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
 
 def draw():
     #CLEAR AND REDRAW SCREEN
