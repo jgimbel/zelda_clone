@@ -28,7 +28,7 @@ class Camera(object):
         text = INVFONT.render("PAUSED", True, WHITE, BLACK)
 
         hud = text.get_rect()
-        hud.topleft = [w/2, h/2]
+        hud.topleft = [w/2 - + hud.size[0] / 2, h/2 - 38]
         surf.blit(text, hud)
 
 
