@@ -6,6 +6,7 @@ from resources import *
 from Items import *
 from Sprites import *
 from Map.Tile import tile
+from Items.saber import sword
 
 
 class Player(pygame.sprite.Sprite):
@@ -36,11 +37,7 @@ class Player(pygame.sprite.Sprite):
         self.arrows = pygame.sprite.Group()
         self.equiped = BOW
         self.inventory = {
-            DIRT: 0,
-            GRASS: 0,
-            WATER: 0,
-            COAL: 0,
-            SWORD: sword(),
+            SWORD: saber(),
             SHIELD: shield(),
             BOW: bow(),
             ARROWS: 100
@@ -52,7 +49,7 @@ class Player(pygame.sprite.Sprite):
             if self.charge < 100:
                 enemy.hearts -= 0.5
             else:
-                enemy.hearts -= self.charge / 10
+                enemy.hearts -= self.charge / 50
         self.charge = 0
 
     def shootArrow(self):
@@ -159,28 +156,21 @@ class Player(pygame.sprite.Sprite):
     def draw(self, SCREEN, rect):
         #Might want to draw the shield behind the player
         if self.face == UP and self.equiped == SWORD:
-            if not self.inventory[SWORD].isDown:
-                SCREEN.blit(self.inventory[SWORD].image, (rect[0] + 20, rect[1] + 16))
-            else:
-                SCREEN.blit(self.inventory[SWORD].image, (rect[0] + 20, rect[1] + 22))
+            s = self.inventory[SWORD]
+            SCREEN.blit(s.image, (rect[0] + 16 + s.handle[0], rect[1] + s.handle[1]))
             SCREEN.blit(self.inventory[SHIELD].image, (rect[0], rect[1] + 20))
 
         if self.face == RIGHT and self.equiped == SWORD:
-            SCREEN.blit(self.inventory[SHIELD].image, (rect[0]+ 10, rect[1] + 20))
+            s = self.inventory[SWORD]
+            SCREEN.blit(self.inventory[SHIELD].image, (rect[0]+ 10 + s.handle[0], rect[1] + 20))
 
         SCREEN.blit(self.image, rect)
-        if type(self.inventory[SWORD]) == sword and self.equiped == SWORD:
+        if issubclass(type(self.inventory[SWORD]), sword) and self.equiped == SWORD:
+            s = self.inventory[SWORD]
             if self.face == DOWN or self.face == LEFT:
-                if not self.inventory[SWORD].isDown:
-                    SCREEN.blit(self.inventory[SWORD].image, (rect[0], rect[1] + 16))
-                else:
-                    SCREEN.blit(self.inventory[SWORD].image, (rect[0], rect[1] + 22))
-
+                SCREEN.blit(s.image, (rect[0] - 16 + s.handle[0], rect[1] + s.handle[1]))
             elif self.face == RIGHT:
-                if not self.inventory[SWORD].isDown:
-                    SCREEN.blit(self.inventory[SWORD].image, (rect[0] + 16, rect[1] + 16))
-                else:
-                    SCREEN.blit(self.inventory[SWORD].image, (rect[0] + 16, rect[1] + 22))
+                SCREEN.blit(s.image, (rect[0] + 8 + s.handle[0], rect[1] + s.handle[1]))
 
             if self.face == LEFT:
                 SCREEN.blit(self.inventory[SHIELD].image, (rect[0]+ 10, rect[1] + 20))

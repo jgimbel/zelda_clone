@@ -1,5 +1,6 @@
 __author__ = 'joel'
-from sword import sword
 from shield import shield
 from arrow import arrow
 from bow import bow
+from saber import saber
+from dagger import dagger

@@ -3,17 +3,18 @@ import pygame
 
 
 class sword(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, image, handle):
         super(sword, self).__init__()
-        self.image = pygame.image.load("Sprites/items/sword.png")
-        self.original = pygame.image.load("Sprites/items/sword.png")
+        self.image = pygame.image.load(image)
         self.rect = self.image.get_rect()
         self.isDown = False
         self.reversed = False
+        self.handle = handle
 
 
     def swordUp(self, charge):
         if self.isDown:
+            self.handle[1] -= self.rect.size[1]
             if self.reversed:
                 self.image = pygame.transform.rotate(self.image, 90)
             else:
@@ -22,6 +23,7 @@ class sword(pygame.sprite.Sprite):
 
     def swordDown(self):
         if not self.isDown:
+            self.handle[1] += self.rect.size[1]
             if self.reversed:
                 self.image = pygame.transform.rotate(self.image, -90)
             else:
