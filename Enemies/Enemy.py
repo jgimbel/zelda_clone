@@ -95,5 +95,5 @@ class enemy(pygame.sprite.Sprite):
 
     def draw(self, SCREEN, rect):
         if self.hearts > 0:
-            pygame.draw.rect(SCREEN,(255,0,0), Rect(rect.x - 2, rect.y - 5, 5 * self.hearts, 5))
+            pygame.draw.rect(SCREEN,(255,0,0), Rect(rect.x + 2, rect.y - 5, 5 * self.hearts, 5))
         SCREEN.blit(self.image, rect)
