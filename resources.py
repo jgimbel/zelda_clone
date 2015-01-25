@@ -49,7 +49,7 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 WHITE = (255, 255, 255)
 HEART = pygame.image.load('Sprites/heart.png')
-EMPTY_HEART = pygame.image.load('Sprites/heart.png')
+EMPTY_HEART = pygame.image.load('Sprites/heart_empty.png')
 ENEMIES = pygame.sprite.Group()
 
 LEVEL = 1

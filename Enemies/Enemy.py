@@ -91,7 +91,7 @@ class enemy(pygame.sprite.Sprite):
                     if self.rect.bottom >= rect.top >= prev_rect.bottom:
                         self.rect.bottom = rect.top
 
-                    player.hearts -= 0.5
+                    player.hearts -= 1
 
     def draw(self, SCREEN, rect):
         if self.hearts > 0:

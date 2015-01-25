@@ -31,8 +31,8 @@ class Player(pygame.sprite.Sprite):
         self.vx = 0
         self.vy = 0
         self.charge = 0
-        self.hearts = 10.0
-        self.maxhearts = 10.0
+        self.hearts = 20
+        self.maxhearts = 20
         self.arrows = pygame.sprite.Group()
         self.equiped = BOW
         self.inventory = {
