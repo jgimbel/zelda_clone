@@ -30,7 +30,7 @@ while True:
     pygame.display.update()
     alive = PLAYER.update(dt, MAP.tilemap)
     ENEMIES.update(PLAYER, dt, PLAYER.arrows, MAP.tilemap, PLAYER)
-    CAM.update(PLAYER.rect)
+    CAM.update(PLAYER.rect, SCREEN)
 
     if not alive:
         pygame.quit()

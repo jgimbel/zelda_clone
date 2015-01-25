@@ -1,6 +1,10 @@
 __author__ = 'joel'
+from pygame import Rect
+
 from resources import *
 from Map.Tile import tile
+
+
 class enemy(pygame.sprite.Sprite):
     speed = 100
     hearts = 5.0
@@ -90,4 +94,6 @@ class enemy(pygame.sprite.Sprite):
                     player.hearts -= 0.5
 
     def draw(self, SCREEN, rect):
+        if self.hearts > 0:
+            pygame.draw.rect(SCREEN,(255,0,0), Rect(rect.x, rect.y - 5, 5 * self.hearts, 5))
         SCREEN.blit(self.image, rect)

@@ -11,8 +11,9 @@ class Camera(object):
         self.bounds = bounds
         self.rect = Rect((0,0), size)
 
-    def update(self, target):
+    def update(self, target, SCREEN):
         self.rect.center = target.center
+        self.rect = Rect(self.rect.topleft, SCREEN.subsurface((0, 0, SCREEN.get_width(), SCREEN.get_height())).get_size())
         #self.rect.clamp_ip(self.bounds)
 
     def draw_background(self, surf, bg):

@@ -67,7 +67,7 @@ class Player(pygame.sprite.Sprite):
     def update(self, dt, walls):
         self.vx, self.vy = 0, 0
         keys = pygame.key.get_pressed()
-        if self.hearts == 0:
+        if self.hearts <= 0:
             self.kill()
             return False
 
