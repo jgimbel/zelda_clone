@@ -13,5 +13,8 @@ class scientist(enemy):
 
     def kill(self, player):
         super(scientist, self).kill(player)
-        for i in range(randrange(1, player.level)):
+        new_scientist = randrange(0, player.level)
+        if new_scientist == 0:
+            new_scientist = 1
+        for i in range(new_scientist):
             scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))

@@ -41,7 +41,7 @@ class Camera(object):
     def drawHUD(self, player):
         screen = pygame.display.get_surface()
         w,h = screen.get_width(),screen.get_height()
-        text = INVFONT.render("arrows: " + str(player.inventory[ARROWS])+", hearts: " + str(player.hearts) + ", Enemies: " + str(len(ENEMIES)), True, WHITE, BLACK)
+        text = INVFONT.render("arrows: %s, hearts: %s, Enemies: %s, L: %s" % (str(player.inventory[ARROWS]), str(player.hearts), str(len(ENEMIES)), str(player.level)), True, WHITE, BLACK)
 
         hud = text.get_rect()
         hud.topleft = [0, h - hud.size[1]]
