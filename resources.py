@@ -18,8 +18,8 @@ WATER = 2
 COAL = 3
 
 TILESIZE = 32
-MAPWIDTH = 30
-MAPHEIGHT = 30
+MAPWIDTH = 60
+MAPHEIGHT = 60
 CAMHEIGHT = 10
 CAMWIDTH = 10
 SCORE = 0
@@ -41,6 +41,10 @@ if sys.platform == "linux" or sys.platform == "linux2":
 
 elif sys.platform == "win32" or sys.platform == "cygwin":
     INVFONT = pygame.font.Font("C:\Windows\Fonts\calibrib.ttf", 12)
+
+VOLUME = 1.0
+
+MUSIC_PAUSE = False
 
 # colors
 BLACK = (0, 0, 0)
