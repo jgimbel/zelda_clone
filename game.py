@@ -17,6 +17,7 @@ class Game():
         info = pygame.display.Info()
         w = info.current_w
         h = info.current_h
+
         self.MUSIC_PAUSE = True
         self.alive = True
         self.SCREEN = pygame.display.set_mode((CAMWIDTH * TILESIZE, CAMHEIGHT * TILESIZE + 50))
@@ -27,8 +28,8 @@ class Game():
         self.SCREEN = self.CAM.toggle_fullscreen()
         self.paused = True
         #TODO: give the option a function to call when clicked
-        self.menu = [Option(self.SCREEN, "NEW GAME", (140, 105), self.newGame), Option(self.SCREEN, "QUIT GAME", (135, 155), self.quit),
-                     Option(self.SCREEN, "OPTIONS", (145, 205), self.newGame)]
+        self.menu = [Option("NEW GAME", ((w/2) -20, (h/3)), self.newGame), Option("QUIT GAME", ((w/2) -20, (4 * h/9)), self.quit),
+                     Option("OPTIONS", ((w/2) -15, ( 5 * h/9)), self.newGame)]
 
         pygame.display.set_caption("Zelda Clone")
 
@@ -50,12 +51,19 @@ class Game():
         sys.exit()
 
     def drawMenu(self):
+        w = pygame.display.Info().current_w
+        h = pygame.display.Info().current_h
+        m = pygame.Surface(( w/ 2, h / 2))
+        m.fill(BLACK)
+        self.SCREEN.blit(m, [w - (w * 3/4), h - (h * 3/4)])
+
         for option in self.menu:
             if option.rect.collidepoint(pygame.mouse.get_pos()):
                 option.hovered = True
             else:
                 option.hovered = False
-            option.draw()
+            option.draw(self.SCREEN)
+
 
     def draw(self):
         #CLEAR AND REDRAW SCREEN

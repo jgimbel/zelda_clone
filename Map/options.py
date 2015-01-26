@@ -3,17 +3,15 @@ from resources import INVFONT
 class Option:
 
     hovered = False
-    def __init__(self, screen, text, pos, function):
+    def __init__(self,text, pos, function):
         self.text = text
         self.pos = pos
-        self.screen = screen
         self.set_rect()
-        self.draw()
         self.function = function
 
-    def draw(self):
+    def draw(self, screen):
         self.set_rend()
-        self.screen.blit(self.rend, self.rect)
+        screen.blit(self.rend, self.rect)
 
     def set_rend(self):
         self.rend = INVFONT.render(self.text, True, self.get_color())
