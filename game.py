@@ -33,7 +33,7 @@ class Game():
 
         pygame.display.set_caption("Zelda Clone")
 
-        pygame.mixer.music.load('Music/HoaF.mp3')
+        pygame.mixer.music.load('Sounds/Music/TheLoomingBattle_0.OGG')
         pygame.mixer.music.play(-1)
         pygame.mixer.music.pause()
         while True:
