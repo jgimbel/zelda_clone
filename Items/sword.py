@@ -10,8 +10,9 @@ class sword(pygame.sprite.Sprite):
         self.isDown = False
         self.reversed = False
         self.handle = handle
-        self.s_miss = pygame.mixer.Sound("Sounds/Effects/battle/swing.wav")
-        self.s_hit = pygame.mixer.Sound("Sounds/Effects/NPC/giant/giant1.wav")
+        f = open("Sounds/Effects/battle/swing.wav")
+        self.s_miss = pygame.mixer.Sound(file=f)
+        self.s_hit = pygame.mixer.Sound(file="Sounds/Effects/NPC/giant/giant1.wav")
 
     def swordUp(self):
         if self.isDown:
