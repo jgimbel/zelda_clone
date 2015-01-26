@@ -17,7 +17,7 @@ class Game():
         info = pygame.display.Info()
         w = info.current_w
         h = info.current_h
-
+        self.VOLUME = 1.0
         self.MUSIC_PAUSE = True
         self.alive = True
         self.SCREEN = pygame.display.set_mode((CAMWIDTH * TILESIZE, CAMHEIGHT * TILESIZE + 50))
@@ -115,15 +115,15 @@ class Game():
                         pygame.mixer.music.pause()
                         self.MUSIC_PAUSE = True
                 if event.key == K_p:
-                    VOLUME += 0.05
-                    if VOLUME > 1.0:
-                        VOLUME = 1.0
-                    pygame.mixer.music.set_volume(VOLUME)
+                    self.VOLUME += 0.05
+                    if self.VOLUME > 1.0:
+                        self.VOLUME = 1.0
+                    pygame.mixer.music.set_volume(self.VOLUME)
                 if event.key == K_o:
-                    VOLUME -= 0.05
-                    if VOLUME < 0.0:
-                        VOLUME = 0.0
-                    pygame.mixer.music.set_volume(VOLUME)
+                    self.VOLUME -= 0.05
+                    if self.VOLUME < 0.0:
+                        self.VOLUME = 0.0
+                    pygame.mixer.music.set_volume(self.VOLUME)
         self.draw()
         pygame.display.update()
 
