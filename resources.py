@@ -42,10 +42,6 @@ if sys.platform == "linux" or sys.platform == "linux2":
 elif sys.platform == "win32" or sys.platform == "cygwin":
     INVFONT = pygame.font.Font("C:\Windows\Fonts\calibrib.ttf", 12)
 
-VOLUME = 1.0
-
-MUSIC_PAUSE = False
-
 # colors
 BLACK = (0, 0, 0)
 BROWN = (153, 76, 0)
