@@ -17,7 +17,6 @@ class Game():
         info = pygame.display.Info()
         w = info.current_w
         h = info.current_h
-
         self.MUSIC_PAUSE = True
         self.alive = True
         self.SCREEN = pygame.display.set_mode((CAMWIDTH * TILESIZE, CAMHEIGHT * TILESIZE + 50))
@@ -26,20 +25,29 @@ class Game():
         self.CAM = Camera(self.PLAYER, Rect((0,0), (MAPWIDTH, MAPHEIGHT)), self.SCREEN.subsurface((0, 40, self.SCREEN.get_width(), self.SCREEN.get_height() - 40)).get_size(), h ,w)
         self.MAP = Map(self.PLAYER)
         self.SCREEN = self.CAM.toggle_fullscreen()
-        self.paused = False
+        self.paused = True
         #TODO: give the option a function to call when clicked
-        self.menu = [Option(self.SCREEN, "NEW GAME", (140, 105)), Option(self.SCREEN, "LOAD GAME", (135, 155)),
-                     Option(self.SCREEN, "OPTIONS", (145, 205))]
+        self.menu = [Option(self.SCREEN, "NEW GAME", (140, 105), self.newGame), Option(self.SCREEN, "QUIT GAME", (135, 155), self.quit),
+                     Option(self.SCREEN, "OPTIONS", (145, 205), self.newGame)]
 
         pygame.display.set_caption("Zelda Clone")
-        scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
-        scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
 
         pygame.mixer.music.load('Music/HoaF.mp3')
         pygame.mixer.music.play(-1)
         pygame.mixer.music.pause()
         while True:
             self.update()
+
+    def newGame(self):
+        self.PLAYER = Player()
+        ENEMIES = pygame.sprite.Group()
+        scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
+        scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
+        self.paused = False
+
+    def quit(self):
+        pygame.quit()
+        sys.exit()
 
     def drawMenu(self):
         for option in self.menu:
@@ -57,7 +65,6 @@ class Game():
         self.CAM.drawHUD(self.PLAYER)
         if self.paused:
             self.drawMenu()
-            self.CAM.draw_pause(self.SCREEN)
 
 
     def update(self):
@@ -69,14 +76,12 @@ class Game():
             self.CAM.update(self.PLAYER.rect, self.SCREEN)
 
         if not self.alive:
-            pygame.quit()
-            sys.exit()
+            self.paused = True
 
         # GET ALL THE EVENTS
         for event in pygame.event.get():
             if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
+                self.quit()
             if event.type == MOUSEBUTTONDOWN:
                 if self.paused and event.button == 1:
                     for option in self.menu:

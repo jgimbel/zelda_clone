@@ -3,16 +3,13 @@ from resources import INVFONT
 class Option:
 
     hovered = False
-    def __init__(self, screen, text, pos):
+    def __init__(self, screen, text, pos, function):
         self.text = text
         self.pos = pos
         self.screen = screen
         self.set_rect()
         self.draw()
-
-    def function(self):
-        print "I was clicked"
-        pass
+        self.function = function
 
     def draw(self):
         self.set_rend()
