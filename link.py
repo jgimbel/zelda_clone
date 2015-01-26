@@ -60,7 +60,7 @@ class Player(pygame.sprite.Sprite):
                 enemy.hearts -= self.charge / 600 * self.inventory[SWORD].damage
             self.inventory[SWORD].s_hit.play()
         else:
-            self.inventory[SWORD].s_miss.play(1)
+            self.inventory[SWORD].s_miss.play()
         self.charge = 0
 
     def shootArrow(self):
