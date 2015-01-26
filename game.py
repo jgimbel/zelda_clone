@@ -43,7 +43,6 @@ class Game():
         self.PLAYER = Player()
         ENEMIES = pygame.sprite.Group()
         scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
-        scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
         self.paused = False
 
     def quit(self):

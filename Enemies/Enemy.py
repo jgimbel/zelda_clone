@@ -17,7 +17,8 @@ class enemy(pygame.sprite.Sprite):
             RIGHT: self.sheet.image_at((0, 96, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
             LEFT: self.sheet.image_at((0, 48, 32, 48), colorkey=(0, 0, 0)).convert_alpha()
         }
-        self.image = self.direction[DOWN]
+        self.face = UP
+        self.image = self.direction[self.face]
         self.rect = self.image.get_rect()
         self.rect.topleft = [x, y]
         self.attacking = False
@@ -57,6 +58,19 @@ class enemy(pygame.sprite.Sprite):
 
         dt /= 1000.0
         prev_rect = self.rect.copy()
+
+        if abs(t[0]) > abs(t[1]):
+            if t[0] > 0:
+                self.face = LEFT
+            else:
+                self.face = RIGHT
+        else:
+            if t[1] > 0:
+                self.face = UP
+            else:
+                self.face = DOWN
+
+        self.image = self.direction[self.face]
         self.rect.x -= t[0] * self.speed * dt
         self.rect.y -= t[1] * self.speed * dt
 
