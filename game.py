@@ -29,7 +29,7 @@ class Game():
         self.paused = True
         #TODO: give the option a function to call when clicked
         self.menu = [Option("NEW GAME", ((w/2) -20, (h/3)), self.newGame), Option("QUIT GAME", ((w/2) -20, (4 * h/9)), self.quit),
-                     Option("OPTIONS", ((w/2) -15, ( 5 * h/9)), self.newGame)]
+                     Option("Resume", ((w/2) -15, ( 5 * h/9)), self.togglePause)]
 
         pygame.display.set_caption("Zelda Clone")
 
@@ -41,13 +41,21 @@ class Game():
 
     def newGame(self):
         self.PLAYER = Player()
-        ENEMIES = pygame.sprite.Group()
+        ENEMIES.remove(ENEMIES.sprites())
+        scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
+        scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
         scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
         self.paused = False
 
     def quit(self):
         pygame.quit()
         sys.exit()
+
+    def togglePause(self):
+        if self.paused:
+            self.paused = False
+        else:
+            self.paused = True
 
     def drawMenu(self):
         w = pygame.display.Info().current_w
