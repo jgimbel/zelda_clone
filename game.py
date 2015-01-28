@@ -45,6 +45,8 @@ class Game():
         scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
         scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
         scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
+        scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
+        scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
         self.paused = False
 
     def quit(self):
@@ -87,7 +89,7 @@ class Game():
         if not self.paused:
             #UPDATE ALL THE THINGS!!
             self.alive = self.PLAYER.update(dt, self.MAP.tilemap)
-            ENEMIES.update(self.PLAYER, dt, self.PLAYER.arrows, self.MAP.tilemap, self.PLAYER)
+            ENEMIES.update(self.PLAYER, dt, self.MAP.tilemap, self.PLAYER)
             self.CAM.update(self.PLAYER.rect, self.SCREEN)
 
         if not self.alive:

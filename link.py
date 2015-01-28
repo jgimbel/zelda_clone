@@ -24,7 +24,24 @@ class Player(pygame.sprite.Sprite):
             DOWN: self.ss.image_at((0, 0, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
             UP: self.ss.image_at((0, 144, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
             RIGHT: self.ss.image_at((0, 96, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
-            LEFT: self.ss.image_at((0, 48, 32, 48), colorkey=(0, 0, 0)).convert_alpha()
+            LEFT: self.ss.image_at((0, 48, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
+
+            DOWN + RIGHT_FOOT: self.ss.image_at((32, 0, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
+            UP + RIGHT_FOOT: self.ss.image_at((32, 144, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
+            RIGHT + RIGHT_FOOT: self.ss.image_at((32, 96, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
+            LEFT + RIGHT_FOOT: self.ss.image_at((32, 48, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
+
+
+            DOWN + CENTER: self.ss.image_at((64, 0, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
+            UP + CENTER: self.ss.image_at((64, 144, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
+            RIGHT + CENTER: self.ss.image_at((64, 96, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
+            LEFT + CENTER: self.ss.image_at((64, 48, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
+
+            DOWN + LEFT_FOOT: self.ss.image_at((96, 0, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
+            UP + LEFT_FOOT: self.ss.image_at((96, 144, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
+            RIGHT + LEFT_FOOT: self.ss.image_at((96, 96, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
+            LEFT + LEFT_FOOT: self.ss.image_at((96, 48, 32, 48), colorkey=(0, 0, 0)).convert_alpha()
+
 
         }
         self.face = DOWN
@@ -38,6 +55,7 @@ class Player(pygame.sprite.Sprite):
         self.maxhearts = 20
         self.arrows = pygame.sprite.Group()
         self.equiped = BOW
+        self.foot = LEFT_FOOT
         self.inventory = {
             SWORD: saber(),
             SHIELD: shield(),
@@ -83,25 +101,21 @@ class Player(pygame.sprite.Sprite):
         if keys[K_UP]:
             self.vy = -self.speed
             self.face = UP
-            self.image = self.direction[self.face]
             self.inventory[SWORD].reverse()
 
         if keys[K_DOWN]:
             self.vy =  self.speed
             self.face = DOWN
-            self.image = self.direction[self.face]
             self.inventory[SWORD].normal()
 
         if keys[K_LEFT]:
             self.vx = -self.speed
             self.face = LEFT
-            self.image = self.direction[self.face]
             self.inventory[SWORD].normal()
 
         if keys[K_RIGHT]:
             self.vx =  self.speed
             self.face = RIGHT
-            self.image = self.direction[self.face]
             self.inventory[SWORD].reverse()
 
         if keys[K_1]:
@@ -134,13 +148,18 @@ class Player(pygame.sprite.Sprite):
 
         if 0 > self.rect.x:
             self.rect.x = 0
-        if  self.rect.x > MAPWIDTH * (TILESIZE - 1):
-            self.rect.x = MAPWIDTH * (TILESIZE - 1)
+        if  self.rect.x > MAPWIDTH * (TILESIZE):
+            self.rect.x = MAPWIDTH * (TILESIZE)
         if 0 > self.rect.y:
             self.rect.y = 0
         if  self.rect.y > MAPHEIGHT * (TILESIZE - 1.5):
             self.rect.y = MAPHEIGHT * (TILESIZE - 1.5)
 
+        if self.vx != 0 or self.vy != 0:
+            self.image = self.direction[self.face + self.foot]
+            self.foot = ((self.foot) % 3) + 1
+        else:
+            self.image = self.direction[self.face]
 
         for sprite in pygame.sprite.spritecollide(self, walls, False):
             if type(sprite) == tile:
@@ -159,6 +178,10 @@ class Player(pygame.sprite.Sprite):
 
 
         self.arrows.update(dt, walls)
+
+        for enemy, arrows in pygame.sprite.groupcollide(ENEMIES, self.arrows, False, True).iteritems():
+            enemy.hearts -= arrows[0].speed / 100
+
         if self.face == UP:
             self.inventory[SWORD].rect.x = self.rect.x
             self.inventory[SWORD].rect.y = self.rect.y + self.inventory[SWORD].handle[1] - 24  - self.rect.size[1]

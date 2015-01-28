@@ -7,10 +7,15 @@ import pygame
 
 
 DIAG = 1 / math.sqrt(2)
+
+LEFT_FOOT = 1
+CENTER = 2
+RIGHT_FOOT = 3
+
 DOWN = 0
-UP = 1
-RIGHT = 2
-LEFT = 3
+UP = 4
+RIGHT = 8
+LEFT = 12
 
 DIRT = 0
 GRASS = 1
