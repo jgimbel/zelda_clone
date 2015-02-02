@@ -12,6 +12,8 @@ from Items.saber import sword
 
 
 class Player(pygame.sprite.Sprite):
+    #TODO crafting system,
+    #TODO UI for building/placing items,
     speed = 125
     resources = [DIRT, GRASS, WATER, COAL, arrow]
 
@@ -57,7 +59,7 @@ class Player(pygame.sprite.Sprite):
             SWORD: saber(),
             SHIELD: shield(),
             BOW: bow(),
-            ARROWS: pygame.sprite.Group()
+            ARROWS: pygame.sprite.Group(),
             QUIVER: 100
         }
 

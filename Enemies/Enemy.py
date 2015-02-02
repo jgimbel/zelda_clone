@@ -6,6 +6,7 @@ from Map.Tile import tile
 
 
 class enemy(pygame.sprite.Sprite):
+    #TODO different enemies,
     speed = 100
     hearts = 5.0
     def __init__(self, sprite, x, y):
@@ -67,8 +68,11 @@ class enemy(pygame.sprite.Sprite):
 
         if self.hearts <= 0:
             self.kill(player)
+        #TODO Drops from peeps,
 
 
+        #TODO epic monsters on % 5 levels,
+        #TODO super monsters on % 10 levels (still gets other bosses from % 5),
         if self.attack_length > 0:
             self.attack_length -= 1
             return
@@ -107,18 +111,13 @@ class enemy(pygame.sprite.Sprite):
                     rect = sprite.rect
                     if self.rect.left <= rect.right <= prev_rect.left :
                         self.rect.left = rect.right
-
-                        self.rect.y -= t[0] * self.speed * dt
                     if self.rect.right >= rect.left >= prev_rect.right:
                         self.rect.right = rect.left
-                        self.rect.y -= t[0] * self.speed * dt
 
                     if self.rect.top <= rect.bottom <= prev_rect.top :
                         self.rect.top = rect.bottom
-                        self.rect.x -= t[1] * self.speed * dt
                     if self.rect.bottom >= rect.top >= prev_rect.bottom:
                         self.rect.bottom = rect.top
-                        self.rect.x -= t[1] * self.speed * dt
 
         if pygame.sprite.collide_rect(self, player):
                 if not self.attacking:

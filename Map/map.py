@@ -6,6 +6,10 @@ from pygame import Rect
 from resources import *
 from Tile import tile
 class Map:
+    #TODO Solid map construct,
+    #TODO trap tiles maybe?,
+    # #TODO different map after lvl 50 to reset creep count (just make stronger monsters and different map to keep the game from exploding from too many enemies),
+
     tilemap = pygame.sprite.Group()
     def __init__(self, player):
         self.player = player

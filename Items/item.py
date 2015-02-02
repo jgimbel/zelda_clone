@@ -6,6 +6,7 @@ from resources import ITEMS
 
 class Item(pygame.sprite.Sprite):
 
+    #TODO different weapons (throwing star, boomerang, etc.),
     def __init__(self, image):
         self.timeToDesync = 0
         self.inInventory = False
