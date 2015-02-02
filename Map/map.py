@@ -19,12 +19,7 @@ class Map:
         for rw in range(MAPHEIGHT):
             for cl in range(MAPWIDTH):
                 randomNumber = random.randint(0, 15)
-                if randomNumber == 0:
-                    t = COAL
-                    tile.blocked = True
-                elif randomNumber == 1 or randomNumber == 2:
-                    t = WATER
-                elif 3 <= randomNumber <= 7:
+                if 0 <= randomNumber <= 7:
                     t = GRASS
                 else:
                     t = DIRT

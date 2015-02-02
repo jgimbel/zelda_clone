@@ -189,7 +189,8 @@ class Player(pygame.sprite.Sprite):
             elif type(i) == arrow:
                 self.inventory[QUIVER] += 1
             elif type(i) == heart:
-                self.hearts += 2
+                if self.hearts < self.maxhearts:
+                    self.hearts += 2
 
 
         if self.face == UP:
