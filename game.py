@@ -9,6 +9,18 @@ from Map import *
 from link import Player
 
 class Game():
+    #TODO Drops from peeps,
+    #TODO different enemies,
+    #TODO Solid map construct,
+    #TODO crafting system,
+    #TODO UI for building/placing items,
+    #TODO timer after waves,
+    #TODO fix wall glitch,
+    #TODO epic monsters on % 5 levels,
+    #TODO super monsters on % 10 levels (still gets other bosses from % 5),
+    #TODO trap tiles maybe?,
+    #TODO different weapons (throwing star, boomerang, etc.),
+    #TODO different map after lvl 50 to reset creep count (just make stronger monsters and different map to keep the game from exploding from too many enemies),
     def __init__(self):
 
         pygame.mixer.pre_init(44100, -16, 2, 2048)
