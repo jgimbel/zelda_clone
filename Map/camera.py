@@ -51,10 +51,11 @@ class Camera(object):
                 r = self.rel_rect(enemy.rect, self.rect)
                 enemy.draw(surf, r)
 
-    def drawHUD(self, player):
+    def drawHUD(self, player, wave):
+        #TODO: make counter to when the next wave starts
         screen = pygame.display.get_surface()
         w,h = screen.get_width(),screen.get_height()
-        text = INVFONT.render("arrows: %s, Enemies: %s, Level: %s" % (str(player.inventory[ARROWS]), str(len(ENEMIES)), str(player.level)), True, WHITE, BLACK)
+        text = INVFONT.render("arrows: %s, Enemies: %s, Wave: %s" % (str(player.inventory[ARROWS]), str(len(ENEMIES)), str(wave)), True, WHITE, BLACK)
 
         hud = text.get_rect()
         hud.topleft = [0, h - hud.size[1] - 9]

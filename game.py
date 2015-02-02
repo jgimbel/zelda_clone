@@ -27,7 +27,8 @@ class Game():
         self.MAP = Map(self.PLAYER)
         self.SCREEN = self.CAM.toggle_fullscreen()
         self.paused = True
-        #TODO: give the option a function to call when clicked
+        self.betweenWave = False
+        self.wave = 1
         self.menu = [Option("NEW GAME", ((w/2) -20, (h/3)), self.newGame), Option("QUIT GAME", ((w/2) -20, (4 * h/9)), self.quit),
                      Option("Resume", ((w/2) -15, ( 5 * h/9)), self.togglePause)]
 
@@ -38,17 +39,12 @@ class Game():
         pygame.mixer.music.pause()
         while True:
             self.update()
-            #TODO timer after waves,
 
     def newGame(self):
         self.PLAYER = Player()
         ENEMIES.remove(ENEMIES.sprites())
-        scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
-        scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
-        scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
-        scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
-        scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
         self.paused = False
+        self.wave = 1
 
     def quit(self):
         pygame.quit()
@@ -74,19 +70,34 @@ class Game():
                 option.hovered = False
             option.draw(self.SCREEN)
 
+    def nextWave(self):
+        for i in range(self.wave * 5):
+            scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
+
 
     def draw(self):
         #CLEAR AND REDRAW SCREEN
         self.CAM.draw_background(self.SCREEN, self.MAP)
         self.CAM.drawPlayer(self.SCREEN, self.PLAYER)
         self.CAM.drawEnemies(self.SCREEN, ENEMIES)
-        self.CAM.drawHUD(self.PLAYER)
+        self.CAM.drawHUD(self.PLAYER, self.wave)
         if self.paused:
             self.drawMenu()
 
 
     def update(self):
+
         dt = self.fpsClock.tick(60)
+
+        #TODO timer after waves,
+        if len(ENEMIES) <= 0:
+            self.wave += 1
+            self.betweenWave = True
+        if self.betweenWave:
+            if self.waveCounter > 30000:
+                self.betweenWave = False
+                self.nextWave()
+
         if not self.paused:
             #UPDATE ALL THE THINGS!!
             self.alive = self.PLAYER.update(dt, self.MAP.tilemap)

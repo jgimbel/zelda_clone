@@ -1,7 +1,8 @@
 __author__ = 'joel'
 from resources import *
 from Map.Tile import tile
-class arrow(pygame.sprite.Sprite):
+from item import Item
+class arrow(Item):
     def __init__(self, face, tl, charge):
         super(arrow, self).__init__("Sprites/items/arrow.png")
         self.rect.topleft = tl
