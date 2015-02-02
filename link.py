@@ -13,7 +13,7 @@ from Items.saber import sword
 
 class Player(pygame.sprite.Sprite):
     speed = 125
-    resources = [DIRT, GRASS, WATER, COAL]
+    resources = [DIRT, GRASS, WATER, COAL, arrow]
 
     def __init__(self):
         super(Player, self).__init__()
@@ -41,8 +41,6 @@ class Player(pygame.sprite.Sprite):
             UP + LEFT_FOOT: self.ss.image_at((96, 144, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
             RIGHT + LEFT_FOOT: self.ss.image_at((96, 96, 32, 48), colorkey=(0, 0, 0)).convert_alpha(),
             LEFT + LEFT_FOOT: self.ss.image_at((96, 48, 32, 48), colorkey=(0, 0, 0)).convert_alpha()
-
-
         }
         self.face = DOWN
         self.image = self.direction[self.face]
@@ -53,15 +51,16 @@ class Player(pygame.sprite.Sprite):
         self.charge = 0
         self.hearts = 20
         self.maxhearts = 20
-        self.arrows = pygame.sprite.Group()
         self.equiped = BOW
         self.foot = LEFT_FOOT
         self.inventory = {
             SWORD: saber(),
             SHIELD: shield(),
             BOW: bow(),
-            ARROWS: 100
+            ARROWS: pygame.sprite.Group()
+            QUIVER: 100
         }
+
     def killed(self):
         self.score += 1
         if self.score % 4 == 0:
@@ -76,7 +75,7 @@ class Player(pygame.sprite.Sprite):
                 if self.charge > 600:
                     self.charge = 600
                 enemy.hearts -= self.charge / 600 * self.inventory[SWORD].damage
-            self.inventory[SWORD].s_hit.play()
+                enemy.hit.play()
         else:
             self.inventory[SWORD].s_miss.play()
         self.charge = 0
@@ -85,18 +84,18 @@ class Player(pygame.sprite.Sprite):
         if self.charge > 600:
             self.charge = 600
 
-        if type(self.inventory[BOW]) == bow and self.inventory[ARROWS] > 0:
+        if self.inventory[QUIVER] > 0:
             tl = self.rect.topleft
-            self.arrows.add(arrow(self.face,[tl[0] + 8, tl[1] + 16] , self.charge))
-            self.inventory[ARROWS] -= 1
+            self.inventory[ARROWS].add(arrow(self.face,[tl[0] + 8, tl[1] + 16] , self.charge))
         self.charge = 0
 
     def update(self, dt, walls):
-        self.vx, self.vy = 0, 0
-        keys = pygame.key.get_pressed()
         if self.hearts <= 0:
             self.kill()
             return False
+
+        self.vx, self.vy = 0, 0
+        keys = pygame.key.get_pressed()
 
         if keys[K_UP]:
             self.vy = -self.speed
@@ -157,7 +156,7 @@ class Player(pygame.sprite.Sprite):
 
         if self.vx != 0 or self.vy != 0:
             self.image = self.direction[self.face + self.foot]
-            self.foot = ((self.foot) % 3) + 1
+            self.foot = ((self.foot + 1) % 4)
         else:
             self.image = self.direction[self.face]
 
@@ -178,9 +177,6 @@ class Player(pygame.sprite.Sprite):
 
 
         self.arrows.update(dt, walls)
-
-        for enemy, arrows in pygame.sprite.groupcollide(ENEMIES, self.arrows, False, True).iteritems():
-            enemy.hearts -= arrows[0].speed / 100
 
         if self.face == UP:
             self.inventory[SWORD].rect.x = self.rect.x

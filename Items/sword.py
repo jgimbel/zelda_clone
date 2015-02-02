@@ -1,17 +1,16 @@
 __author__ = 'joel'
 import pygame
 
+from item import Item
 
-class sword(pygame.sprite.Sprite):
+
+class sword(Item):
     def __init__(self, image, handle):
-        super(sword, self).__init__()
-        self.image = pygame.image.load(image)
-        self.rect = self.image.get_rect()
+        super(sword, self).__init__(image)
         self.isDown = False
         self.reversed = False
         self.handle = handle
         self.s_miss = pygame.mixer.Sound("Sounds/Effects/battle/swing.ogg")
-        self.s_hit = pygame.mixer.Sound("Sounds/Effects/NPC/giant/giant1.ogg")
 
     def swordUp(self):
         if self.isDown:

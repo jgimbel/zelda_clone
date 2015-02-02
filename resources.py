@@ -33,6 +33,7 @@ SWORD = "sword"
 BOW = "bow"
 SHIELD = "shield"
 ARROWS = "arrows"
+QUIVER = "quiver"
 textures = {
     DIRT: pygame.image.load('Sprites/earthTiles/38earth8.bmp'),
     GRASS: pygame.image.load('Sprites/grassTiles/1grass1.bmp'),
@@ -56,5 +57,6 @@ WHITE = (255, 255, 255)
 HEART = pygame.image.load('Sprites/heart.png')
 EMPTY_HEART = pygame.image.load('Sprites/heart_empty.png')
 ENEMIES = pygame.sprite.Group()
+ITEMS = pygame.sprite.Group()
 
 LEVEL = 1

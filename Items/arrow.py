@@ -3,9 +3,7 @@ from resources import *
 from Map.Tile import tile
 class arrow(pygame.sprite.Sprite):
     def __init__(self, face, tl, charge):
-        super(arrow, self).__init__()
-        self.image = pygame.image.load("Sprites/items/arrow.png").convert_alpha()
-        self.rect = self.image.get_rect()
+        super(arrow, self).__init__("Sprites/items/arrow.png")
         self.rect.topleft = tl
         self.direction = face
         self.vx = 0
@@ -26,6 +24,7 @@ class arrow(pygame.sprite.Sprite):
             self.image = pygame.transform.rotate(self.image, 315)
 
     def update(self, dt, walls):
+        super(arrow, self).update()
         self.rect.x += self.vx * dt
         self.rect.y += self.vy * dt
         self.distance += dt
@@ -37,4 +36,4 @@ class arrow(pygame.sprite.Sprite):
                 self.kill()
 
     def draw(self, SCREEN, rect):
-        SCREEN.blit(self.image, rect)
+        super(arrow, self).draw(SCREEN, rect)
