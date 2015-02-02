@@ -43,10 +43,10 @@ textures = {
 pygame.font.init()
 INVFONT = ""
 if sys.platform == "linux" or sys.platform == "linux2":
-    INVFONT = pygame.font.Font("/usr/share/fonts/truetype/freefont/FreeSansBold.ttf", 12)
+    INVFONT = pygame.font.Font("/usr/share/fonts/truetype/freefont/FreeSansBold.ttf", 14)
 
 elif sys.platform == "win32" or sys.platform == "cygwin":
-    INVFONT = pygame.font.Font("C:\Windows\Fonts\calibrib.ttf", 12)
+    INVFONT = pygame.font.Font("C:\Windows\Fonts\calibrib.ttf", 14)
 
 # colors
 BLACK = (0, 0, 0)

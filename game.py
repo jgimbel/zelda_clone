@@ -23,7 +23,7 @@ class Game():
         self.SCREEN = pygame.display.set_mode((CAMWIDTH * TILESIZE, CAMHEIGHT * TILESIZE + 50))
         self.fpsClock = pygame.time.Clock()
         self.PLAYER = Player()
-        self.CAM = Camera(self.PLAYER, Rect((0,0), (MAPWIDTH, MAPHEIGHT)), self.SCREEN.subsurface((0, 40, self.SCREEN.get_width(), self.SCREEN.get_height() - 40)).get_size(), h ,w)
+        self.CAM = Camera(self.SCREEN, Rect((0,0), (MAPWIDTH, MAPHEIGHT)), self.SCREEN.subsurface((0, 40, self.SCREEN.get_width(), self.SCREEN.get_height() - 40)).get_size(), h ,w)
         self.MAP = Map(self.PLAYER)
         self.SCREEN = self.CAM.toggle_fullscreen()
         self.paused = True
@@ -80,10 +80,12 @@ class Game():
 
     def draw(self):
         #CLEAR AND REDRAW SCREEN
-        self.CAM.draw_background(self.SCREEN, self.MAP)
-        self.CAM.drawPlayer(self.SCREEN, self.PLAYER)
-        self.CAM.drawEnemies(self.SCREEN, ENEMIES)
+        self.CAM.draw_background(self.MAP)
+        self.CAM.drawPlayer(self.PLAYER)
+        self.CAM.drawEnemies(ENEMIES)
         self.CAM.drawHUD(self.PLAYER, self.wave)
+        if self.betweenWave:
+            self.CAM.drawTimer(self.waveCounter)
         if self.paused:
             self.drawMenu()
 
@@ -109,7 +111,7 @@ class Game():
             #UPDATE ALL THE THINGS!!
             self.alive = self.PLAYER.update(dt, self.MAP.tilemap)
             ENEMIES.update(self.PLAYER, dt, self.MAP.tilemap, self.PLAYER)
-            self.CAM.update(self.PLAYER.rect, self.SCREEN)
+            self.CAM.update(self.PLAYER.rect)
 
         if not self.alive:
             self.paused = True
