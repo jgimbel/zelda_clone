@@ -29,6 +29,7 @@ class Game():
         self.paused = True
         self.betweenWave = False
         self.wave = 1
+        self.waveCounter = 0
         self.menu = [Option("NEW GAME", ((w/2) -20, (h/3)), self.newGame), Option("QUIT GAME", ((w/2) -20, (4 * h/9)), self.quit),
                      Option("Resume", ((w/2) -15, ( 5 * h/9)), self.togglePause)]
 
@@ -96,7 +97,10 @@ class Game():
         if self.betweenWave:
             if self.waveCounter > 30000:
                 self.betweenWave = False
+                self.waveCounter = 0
                 self.nextWave()
+            else:
+                self.waveCounter += dt
 
         if not self.paused:
             #UPDATE ALL THE THINGS!!
