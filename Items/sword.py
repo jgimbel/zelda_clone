@@ -5,12 +5,13 @@ from item import Item
 
 
 class sword(Item):
-    def __init__(self, image, handle):
-        super(sword, self).__init__(image)
+    def __init__(self, image, handle, topleft=[0,0], inventory=False):
+        super(sword, self).__init__(image, inventory=inventory)
         self.isDown = False
         self.reversed = False
         self.handle = handle
         self.s_miss = pygame.mixer.Sound("Sounds/Effects/battle/swing.ogg")
+        self.rect.topleft=topleft
 
     def swordUp(self):
         if self.isDown:

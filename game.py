@@ -74,6 +74,8 @@ class Game():
             option.draw(self.SCREEN)
 
     def nextWave(self):
+        #TODO epic monsters on % 5 levels,
+        #TODO super monsters on % 10 levels (still gets other bosses from % 5),
         for i in range(self.wave * 5):
             scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
 
@@ -84,6 +86,8 @@ class Game():
         self.CAM.drawPlayer(self.PLAYER)
         self.CAM.drawEnemies(ENEMIES)
         self.CAM.drawHUD(self.PLAYER, self.wave)
+        self.CAM.drawItems(ITEMS)
+
         if self.betweenWave:
             self.CAM.drawTimer(self.waveCounter)
         if self.paused:
@@ -94,7 +98,6 @@ class Game():
 
         dt = self.fpsClock.tick(60)
 
-        #TODO timer after waves,
         if not self.betweenWave and len(ENEMIES) <= 0:
             self.wave += 1
             self.betweenWave = True

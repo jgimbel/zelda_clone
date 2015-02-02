@@ -60,11 +60,14 @@ class Camera(object):
         hud.topleft = [w/2 - hud.size[0]/2, 7]
         self.screen.blit(text, hud)
 
+    def drawItems(self, items):
+        for i in items:
+            i.draw(self.screen, self.rel_rect(i.rect, self.rect))
+
 
     def drawHUD(self, player, wave):
-        #TODO: make counter to when the next wave starts
         h =self.screen.get_height()
-        text = INVFONT.render("arrows: %s, Enemies: %s, Wave: %s" % (str(len(player.inventory[ARROWS])), str(len(ENEMIES)), str(wave)), True, WHITE, BLACK).convert_alpha()
+        text = INVFONT.render("arrows: %s, Enemies: %s, Wave: %s" % (str(player.inventory[QUIVER]), str(len(ENEMIES)), str(wave)), True, WHITE, BLACK).convert_alpha()
 
         hud = text.get_rect()
         hud.topleft = [0, h - hud.size[1] - 9]

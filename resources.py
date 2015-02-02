@@ -27,19 +27,21 @@ MAPWIDTH = 60
 MAPHEIGHT = 60
 CAMHEIGHT = 10
 CAMWIDTH = 10
-SCORE = 0
 
+ITEMS = pygame.sprite.Group()
 SWORD = "sword"
 BOW = "bow"
 SHIELD = "shield"
 ARROWS = "arrows"
 QUIVER = "quiver"
+
 textures = {
     DIRT: pygame.image.load('Sprites/earthTiles/38earth8.bmp'),
     GRASS: pygame.image.load('Sprites/grassTiles/1grass1.bmp'),
     WATER: pygame.image.load('Sprites/waterTiles/13water3.bmp'),
     COAL: pygame.image.load('Sprites/earthTiles/32earth2.bmp')
 }
+
 pygame.font.init()
 INVFONT = ""
 if sys.platform == "linux" or sys.platform == "linux2":
@@ -57,6 +59,5 @@ WHITE = (255, 255, 255)
 HEART = pygame.image.load('Sprites/heart.png')
 EMPTY_HEART = pygame.image.load('Sprites/heart_empty.png')
 ENEMIES = pygame.sprite.Group()
-ITEMS = pygame.sprite.Group()
 
 LEVEL = 1

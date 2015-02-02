@@ -1,23 +1,26 @@
 __author__ = 'joel'
-import pygame
 
-from resources import ITEMS
+from resources import *
 
 
 class Item(pygame.sprite.Sprite):
 
     #TODO different weapons (throwing star, boomerang, etc.),
-    def __init__(self, image):
+    def __init__(self, image, inventory=False):
+        if not inventory:
+            super(Item, self).__init__(ITEMS)
+        else:
+            super(Item, self).__init__()
+
         self.timeToDesync = 0
-        self.inInventory = False
-        super(Item, self).__init__(ITEMS)
+        self.inInventory = inventory
         self.image = pygame.image.load(image).convert_alpha()
         self.rect = self.image.get_rect()
 
     def update(self):
         if not self.inInventory:
 
-            if self.timeToDesync > 60:
+            if self.timeToDesync > 60000:
                 self.kill()
 
             self.timeToDesync += 1

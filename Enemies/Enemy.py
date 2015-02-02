@@ -1,9 +1,13 @@
 __author__ = 'joel'
+from random import randrange
+
 from pygame import Rect
 
 from resources import *
 from Map.Tile import tile
-
+from Items.saber import saber
+from Items.bow import bow
+from Items.arrow import arrow
 
 class enemy(pygame.sprite.Sprite):
     #TODO different enemies,
@@ -63,16 +67,27 @@ class enemy(pygame.sprite.Sprite):
 
     def update(self, target, dt, walls, player):
 
-        for arrow in pygame.sprite.spritecollide(self, player.inventory[ARROWS], True):
-            self.hearts -= arrow.speed / 100
+        for a in pygame.sprite.spritecollide(self, player.inventory[ARROWS], True):
+            self.hearts -= a.speed / 100
 
         if self.hearts <= 0:
             self.kill(player)
-        #TODO Drops from peeps,
+            item = randrange(0,100)
+            if item < 75:
+                ITEMS.add(arrow(UP, self.rect.topleft, 0))
+                if item < 50:
+                    ITEMS.add(arrow(UP, self.rect.topleft, 0))
+                    if item < 25:
+                        ITEMS.add(arrow(UP, self.rect.topleft, 0))
+
+            elif 85  > item >= 75:
+                ITEMS.add(bow(self.rect.topleft))
+            elif 90 > item >= 85:
+                ITEMS.add(saber(self.rect.topleft))
 
 
-        #TODO epic monsters on % 5 levels,
-        #TODO super monsters on % 10 levels (still gets other bosses from % 5),
+
+
         if self.attack_length > 0:
             self.attack_length -= 1
             return

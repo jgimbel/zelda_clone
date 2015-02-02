@@ -1,5 +1,5 @@
 __author__ = 'joel'
-from resources import INVFONT
+from resources import *
 class Option:
 
     hovered = False

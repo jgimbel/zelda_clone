@@ -52,14 +52,14 @@ class Player(pygame.sprite.Sprite):
         self.charge = 0
         self.hearts = 20
         self.maxhearts = 20
-        self.equiped = BOW
+        self.equiped = SWORD
         self.foot = LEFT_FOOT
         self.inventory = {
-            SWORD: saber(),
-            SHIELD: shield(),
-            BOW: bow(),
+            SWORD: dagger(inventory=True),
+            SHIELD: shield(inventory=True),
+            BOW: None,
             ARROWS: pygame.sprite.Group(),
-            QUIVER: 100
+            QUIVER: 0
         }
 
     def killed(self):
@@ -117,10 +117,12 @@ class Player(pygame.sprite.Sprite):
             self.inventory[SWORD].reverse()
 
         if keys[K_1]:
-            self.equiped = SWORD
+            if self.inventory[SWORD] != None:
+                self.equiped = SWORD
 
         if keys[K_2]:
-            self.equiped = BOW
+            if self.inventory[BOW] != None:
+                self.equiped = BOW
 
         if keys[K_SPACE]:
             if self.equiped == BOW:
@@ -176,6 +178,14 @@ class Player(pygame.sprite.Sprite):
 
 
         self.inventory[ARROWS].update(dt, walls)
+        for i in pygame.sprite.spritecollide(self, ITEMS, True):
+            if issubclass(type(i), sword):
+                self.inventory[SWORD] = i
+            elif type(i) == arrow:
+                self.inventory[QUIVER] += 1
+            elif type(i) == bow:
+                self.inventory[BOW] = i
+
 
         if self.face == UP:
             self.inventory[SWORD].rect.x = self.rect.x

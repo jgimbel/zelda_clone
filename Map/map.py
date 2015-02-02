@@ -5,6 +5,8 @@ from pygame import Rect
 
 from resources import *
 from Tile import tile
+
+
 class Map:
     #TODO Solid map construct,
     #TODO trap tiles maybe?,
