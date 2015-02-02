@@ -57,7 +57,7 @@ class Player(pygame.sprite.Sprite):
             SWORD: saber(),
             SHIELD: shield(),
             BOW: bow(),
-            ARROWS: pygame.sprite.Group()
+            ARROWS: pygame.sprite.Group(),
             QUIVER: 100
         }
 
