@@ -8,6 +8,7 @@ from Map.Tile import tile
 from Items.saber import saber
 from Items.bow import bow
 from Items.arrow import arrow
+from Items.heart import heart
 
 class enemy(pygame.sprite.Sprite):
     #TODO different enemies,
@@ -84,6 +85,9 @@ class enemy(pygame.sprite.Sprite):
                 ITEMS.add(bow(self.rect.topleft))
             elif 90 > item >= 85:
                 ITEMS.add(saber(self.rect.topleft))
+            else:
+                ITEMS.add(heart(self.rect.topleft))
+
 
 
 

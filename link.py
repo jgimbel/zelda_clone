@@ -86,6 +86,7 @@ class Player(pygame.sprite.Sprite):
         if self.inventory[QUIVER] > 0:
             tl = self.rect.topleft
             self.inventory[ARROWS].add(arrow(self.face,[tl[0] + 8, tl[1] + 16] , self.charge))
+            self.inventory[QUIVER] -= 1
         self.charge = 0
 
     def update(self, dt, walls):
@@ -180,11 +181,15 @@ class Player(pygame.sprite.Sprite):
         self.inventory[ARROWS].update(dt, walls)
         for i in pygame.sprite.spritecollide(self, ITEMS, True):
             if issubclass(type(i), sword):
+                i.inInventory = True
                 self.inventory[SWORD] = i
+            elif type(i) == bow:
+                i.inInventory = True
+                self.inventory[BOW] = i
             elif type(i) == arrow:
                 self.inventory[QUIVER] += 1
-            elif type(i) == bow:
-                self.inventory[BOW] = i
+            elif type(i) == heart:
+                self.hearts += 2
 
 
         if self.face == UP:

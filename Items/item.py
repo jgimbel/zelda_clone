@@ -6,7 +6,7 @@ from resources import *
 class Item(pygame.sprite.Sprite):
 
     #TODO different weapons (throwing star, boomerang, etc.),
-    def __init__(self, image, inventory=False):
+    def __init__(self, image, inventory=False, topleft=[0,0]):
         if not inventory:
             super(Item, self).__init__(ITEMS)
         else:
@@ -16,6 +16,7 @@ class Item(pygame.sprite.Sprite):
         self.inInventory = inventory
         self.image = pygame.image.load(image).convert_alpha()
         self.rect = self.image.get_rect()
+        self.rect.topleft = topleft
 
     def update(self):
         if not self.inInventory:
