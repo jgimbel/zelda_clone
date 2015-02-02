@@ -2,41 +2,14 @@ __author__ = 'joel'
 import pygame
 
 from item import Item
-
+from resources import SWORD
 
 class sword(Item):
     def __init__(self, image, handle, topleft=[0,0], inventory=False):
         super(sword, self).__init__(image, inventory=inventory)
+        self.item = SWORD
         self.isDown = False
         self.reversed = False
         self.handle = handle
         self.s_miss = pygame.mixer.Sound("Sounds/Effects/battle/swing.ogg")
         self.rect.topleft=topleft
-
-    def swordUp(self):
-        if self.isDown:
-            self.handle[1] -= self.rect.size[1]
-            if self.reversed:
-                self.image = pygame.transform.rotate(self.image, 90)
-            else:
-                self.image = pygame.transform.rotate(self.image, -90)
-            self.isDown = False
-
-    def swordDown(self):
-        if not self.isDown:
-            self.handle[1] += self.rect.size[1]
-            if self.reversed:
-                self.image = pygame.transform.rotate(self.image, -90)
-            else:
-                self.image = pygame.transform.rotate(self.image, 90)
-            self.isDown = True
-
-    def reverse(self):
-        if not self.reversed:
-            self.image = pygame.transform.flip(self.image, 1, 0)
-            self.reversed = True
-
-    def normal(self):
-        if self.reversed:
-            self.image = pygame.transform.flip(self.image, 1, 0)
-            self.reversed = False

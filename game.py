@@ -27,6 +27,7 @@ class Game():
         self.MAP = Map(self.PLAYER)
         self.SCREEN = self.CAM.toggle_fullscreen()
         self.paused = True
+        self.inventory = False
         self.betweenWave = False
         self.wave = 1
         self.waveCounter = 0
@@ -59,26 +60,11 @@ class Game():
         else:
             self.paused = True
 
-    def drawMenu(self):
-        w = pygame.display.Info().current_w
-        h = pygame.display.Info().current_h
-        m = pygame.Surface(( w/ 2, h / 2))
-        m.fill(BLACK)
-        self.SCREEN.blit(m, [w - (w * 3/4), h - (h * 3/4)])
-
-        for option in self.menu:
-            if option.rect.collidepoint(pygame.mouse.get_pos()):
-                option.hovered = True
-            else:
-                option.hovered = False
-            option.draw(self.SCREEN)
-
     def nextWave(self):
         #TODO epic monsters on % 5 levels,
         #TODO super monsters on % 10 levels (still gets other bosses from % 5),
         for i in range(self.wave * 5):
             scientist(randrange(0, MAPWIDTH * TILESIZE), randrange(0, MAPHEIGHT * TILESIZE))
-
 
     def draw(self):
         #CLEAR AND REDRAW SCREEN
@@ -88,32 +74,33 @@ class Game():
         self.CAM.drawHUD(self.PLAYER, self.wave)
         self.CAM.drawItems(ITEMS)
 
+        if self.inventory:
+            self.CAM.drawInventory(self.PLAYER.inventory)
+        if self.paused:
+            self.CAM.drawMenu(self.menu)
+
         if self.betweenWave:
             self.CAM.drawTimer(self.waveCounter)
-        if self.paused:
-            self.drawMenu()
-
 
     def update(self):
 
-        dt = self.fpsClock.tick(60)
-
-        if not self.betweenWave and len(ENEMIES) <= 0:
-            self.wave += 1
-            self.betweenWave = True
-
-        if self.betweenWave:
-            if self.waveCounter > 30000:
-                self.betweenWave = False
-                self.waveCounter = 0
-                self.nextWave()
-            else:
-                self.waveCounter += dt
-
         if not self.paused:
+            dt = self.fpsClock.tick(60)
+            if not self.betweenWave and len(ENEMIES) <= 0:
+                self.wave += 1
+                self.betweenWave = True
+
+            if self.betweenWave:
+                if self.waveCounter > 30000:
+                    self.betweenWave = False
+                    self.waveCounter = 0
+                    self.nextWave()
+                else:
+                    self.waveCounter += dt
+
             #UPDATE ALL THE THINGS!!
             self.alive = self.PLAYER.update(dt, self.MAP.tilemap)
-            ENEMIES.update(self.PLAYER, dt, self.MAP.tilemap, self.PLAYER)
+            ENEMIES.update(self.PLAYER, dt, self.MAP.tilemap)
             self.CAM.update(self.PLAYER.rect)
 
         if not self.alive:
@@ -130,13 +117,13 @@ class Game():
                             option.function()
 
             if event.type == KEYDOWN:
-                if event.key == 102:
-                    SCREEN = self.CAM.toggle_fullscreen()
-                if event.key == K_ESCAPE:
-                    if self.paused:
-                        self.paused = False
+                if event.key == K_TAB:
+                    if self.inventory:
+                        self.inventory = False
                     else:
-                        self.paused = True
+                        self.inventory = True
+                if event.key == K_ESCAPE:
+                    self.togglePause()
                 if event.key == K_BACKSPACE:
                     pygame.quit()
                     sys.exit()

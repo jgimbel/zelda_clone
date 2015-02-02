@@ -5,6 +5,7 @@ from item import Item
 class arrow(Item):
     def __init__(self, face, tl, charge):
         super(arrow, self).__init__("Sprites/items/arrow.png")
+        self.item = ARROW
         self.rect.topleft = tl
         self.direction = face
         self.vx = 0

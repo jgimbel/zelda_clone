@@ -47,6 +47,7 @@ class enemy(pygame.sprite.Sprite):
         self.attacking = False
         self.attack_length = 0
         self.foot = LEFT_FOOT
+        self.foundPlayer = False
         self.hit = pygame.mixer.Sound("Sounds/Effects/NPC/giant/giant1.ogg")
 
     def attack(self):
@@ -63,66 +64,22 @@ class enemy(pygame.sprite.Sprite):
 
     def kill(self, player):
         super(enemy, self).kill()
-        player.killed()
-
-
-    def update(self, target, dt, walls, player):
-
-        for a in pygame.sprite.spritecollide(self, player.inventory[ARROWS], True):
-            self.hearts -= a.speed / 100
-
-        if self.hearts <= 0:
-            self.kill(player)
-            item = randrange(0,100)
-            if item < 75:
+        item = randrange(0,100)
+        if item < 75:
+            ITEMS.add(arrow(UP, self.rect.topleft, 0))
+            if item < 50:
                 ITEMS.add(arrow(UP, self.rect.topleft, 0))
-                if item < 50:
+                if item < 25:
                     ITEMS.add(arrow(UP, self.rect.topleft, 0))
-                    if item < 25:
-                        ITEMS.add(arrow(UP, self.rect.topleft, 0))
 
-            elif 85  > item >= 75:
-                ITEMS.add(bow(self.rect.topleft))
-            elif 90 > item >= 85:
-                ITEMS.add(saber(self.rect.topleft))
-            else:
-                ITEMS.add(heart(self.rect.topleft))
-
-
-
-
-
-        if self.attack_length > 0:
-            self.attack_length -= 1
-            return
-
-        d = self.rect.x - target.rect.x, self.rect.y - target.rect.y
-        t = self.normalize_vector(d[0] ,d[1])
-
-        dt /= 1000.0
-        prev_rect = self.rect.copy()
-
-        if abs(t[0]) > abs(t[1]):
-            if t[0] > 0:
-                self.face = LEFT
-            else:
-                self.face = RIGHT
+        elif 85  > item >= 75:
+            ITEMS.add(bow(self.rect.topleft))
+        elif 90 > item >= 85:
+            ITEMS.add(saber(self.rect.topleft))
         else:
-            if t[1] > 0:
-                self.face = UP
-            else:
-                self.face = DOWN
+            ITEMS.add(heart(self.rect.topleft))
 
-        self.image = self.direction[self.face]
-        self.rect.x -= t[0] * self.speed * dt
-        self.rect.y -= t[1] * self.speed * dt
-
-        if t[0] != 0 or t[1] != 0:
-            self.image = self.direction[self.face + self.foot]
-            self.foot = ((self.foot + 1) % 4)
-        else:
-            self.image = self.direction[self.face]
-
+    def collideWall(self, walls, prev_rect):
         for sprite in pygame.sprite.spritecollide(self, walls, False):
             if type(sprite) == tile:
                 if sprite.blocked:
@@ -138,7 +95,8 @@ class enemy(pygame.sprite.Sprite):
                     if self.rect.bottom >= rect.top >= prev_rect.bottom:
                         self.rect.bottom = rect.top
 
-        if pygame.sprite.collide_rect(self, player):
+    def tryAttack(self,player, prev_rect):
+         if pygame.sprite.collide_rect(self, player):
                 if not self.attacking:
                     self.attack()
                     rect = player.rect
@@ -154,7 +112,90 @@ class enemy(pygame.sprite.Sprite):
 
                     player.hearts -= 1
 
+    def moveEnemy(self, target, dt):
+        if self.foundPlayer:
+            t = self.movePlayer(target)
+        else:
+            t = self.moveRandom(target)
 
+        self.image = self.direction[self.face]
+        t = (t[0] * self.speed * dt / 1000, t[1] * self.speed * dt / 1000)
+        self.rect.x -= t[0]
+        self.rect.y -= t[1]
+
+        if 0 > self.rect.x:
+            self.rect.x = 0
+        if  self.rect.x > MAPWIDTH * TILESIZE:
+            self.rect.x = MAPWIDTH * TILESIZE
+        if 0 > self.rect.y:
+            self.rect.y = 0
+        if  self.rect.y > MAPHEIGHT * (TILESIZE - 1):
+            self.rect.y = MAPHEIGHT * (TILESIZE - 1)
+
+        if t[0] != 0 or t[1] != 0:
+            self.image = self.direction[self.face + self.foot]
+            self.foot = ((self.foot + 1) % 4)
+        else:
+            self.image = self.direction[self.face]
+
+    def moveRandom(self, target):
+        d = randrange(-100, 100), randrange(-100, 100)
+        t = self.normalize_vector(d[0] ,d[1])
+
+        if abs(t[0]) > abs(t[1]):
+            if t[0] > 0:
+                self.face = LEFT
+                if target.rect.y - 10 <= self.rect.y <= target.rect.y + 10 and target.rect.x < self.rect.x:
+                    self.foundPlayer = True
+            else:
+                self.face = RIGHT
+                if target.rect.y - 10 <= self.rect.y <= target.rect.y + 10 and target.rect.x > self.rect.x:
+                    self.foundPlayer = True
+        else:
+            if t[1] > 0:
+                self.face = UP
+                if target.rect.y - 10 <= self.rect.x <= target.rect.x + 10 and target.rect.y < self.rect.y:
+                    self.foundPlayer = True
+            else:
+                self.face = DOWN
+                if target.rect.y - 10 <= self.rect.x <= target.rect.x + 10 and target.rect.y > self.rect.y:
+                    self.foundPlayer = True
+
+        return t
+
+    def movePlayer(self, target):
+        d = self.rect.x - target.rect.x, self.rect.y - target.rect.y
+        t = self.normalize_vector(d[0] ,d[1])
+        if abs(t[0]) > abs(t[1]):
+            if t[0] > 0:
+                self.face = LEFT
+            else:
+                self.face = RIGHT
+        else:
+            if t[1] > 0:
+                self.face = UP
+            else:
+                self.face = DOWN
+
+        return t
+
+    def update(self, target, dt, walls):
+        if self.attack_length > 0:
+            self.attack_length -= 1
+            return
+
+
+        for a in pygame.sprite.spritecollide(self, target.arrows, True):
+            self.hearts -= a.speed / 100
+
+        if self.hearts <= 0:
+            self.kill(target)
+
+        prev_rect = self.rect.copy()
+        self.moveEnemy(target, dt)
+
+        self.collideWall(walls, prev_rect)
+        self.tryAttack(target, prev_rect)
 
     def draw(self, SCREEN, rect):
         if self.hearts > 0:

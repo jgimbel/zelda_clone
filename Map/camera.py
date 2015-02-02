@@ -14,6 +14,7 @@ class Camera(object):
         self.FULLH = h
         self.FULLW = w
         self.screen = screen
+
     def update(self, target):
         self.rect.center = target.center
         self.rect = Rect(self.rect.topleft, self.screen.subsurface((0, 0, self.screen.get_width(), self.screen.get_height())).get_size())
@@ -40,7 +41,7 @@ class Camera(object):
             r = self.rel_rect(player.rect, self.rect)
             player.draw(self.screen, r)
 
-        for a in player.inventory[ARROWS]:
+        for a in player.arrows:
             if self.rect.colliderect(a.rect):
                 r = self.rel_rect(a.rect, self.rect)
                 a.draw(self.screen, r)
@@ -67,7 +68,8 @@ class Camera(object):
 
     def drawHUD(self, player, wave):
         h =self.screen.get_height()
-        text = INVFONT.render("arrows: %s, Enemies: %s, Wave: %s" % (str(player.inventory[QUIVER]), str(len(ENEMIES)), str(wave)), True, WHITE, BLACK).convert_alpha()
+
+        text = INVFONT.render("arrows: %s, Enemies: %s, Wave: %s" % (str(), str(len(ENEMIES)), str(wave)), True, WHITE, BLACK).convert_alpha()
 
         hud = text.get_rect()
         hud.topleft = [0, h - hud.size[1] - 9]
@@ -87,6 +89,21 @@ class Camera(object):
         hearts.set_colorkey((0,0,0), pygame.RLEACCEL)
         self.screen.blit(hearts.convert_alpha(), hr)
 
+    def drawInventory(self, inventory):
+        inventory.draw(self.screen)
+
+    def drawMenu(self, menu):
+        w = pygame.display.Info().current_w
+        h = pygame.display.Info().current_h
+        m = pygame.Surface(( w/ 2, h / 2))
+        m.fill(BLACK)
+        self.screen.blit(m, [w - (w * 3/4), h - (h * 3/4)])
+        for option in menu:
+            if option.rect.collidepoint(pygame.mouse.get_pos()):
+                option.hovered = True
+            else:
+                option.hovered = False
+            option.draw(self.screen)
 
     def toggle_fullscreen(self):
         screen = pygame.display.get_surface()

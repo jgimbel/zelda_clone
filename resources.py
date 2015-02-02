@@ -30,10 +30,14 @@ CAMWIDTH = 10
 
 ITEMS = pygame.sprite.Group()
 SWORD = "sword"
+SABER = "saber"
 BOW = "bow"
 SHIELD = "shield"
+ARROW = "arrow"
 ARROWS = "arrows"
 QUIVER = "quiver"
+DAGGER = "dagger"
+ITEM = "item"
 
 textures = {
     DIRT: pygame.image.load('Sprites/earthTiles/38earth8.bmp'),

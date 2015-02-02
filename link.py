@@ -47,46 +47,39 @@ class Player(pygame.sprite.Sprite):
         self.image = self.direction[self.face]
         self.rect = self.image.get_rect()
         self.rect.topleft = [randrange(0, MAPHEIGHT * TILESIZE), randrange(0, MAPWIDTH * TILESIZE)]
-        self.vx = 0
-        self.vy = 0
+        vx = 0
+        vy = 0
         self.charge = 0
         self.hearts = 20
         self.maxhearts = 20
-        self.equiped = SWORD
+        self.equiped = DAGGER
         self.foot = LEFT_FOOT
-        self.inventory = {
-            SWORD: dagger(inventory=True),
-            SHIELD: shield(inventory=True),
-            BOW: None,
-            ARROWS: pygame.sprite.Group(),
-            QUIVER: 0
-        }
 
-    def killed(self):
-        pass
+        self.inventory = Backpack()
+        self.inventory.addToolbar(dagger(True))
+        self.arrows = pygame.sprite.Group()
 
     def swingSword(self):
-        self.inventory[SWORD].swordDown()
-        for  enemy in pygame.sprite.spritecollide(self.inventory[SWORD], ENEMIES, False):
+        self.inventory[self.equiped].down()
+        for  enemy in pygame.sprite.spritecollide(self.inventory[self.equiped], ENEMIES, False):
             if self.charge < 100:
                 enemy.hearts -= 0.5
             else:
                 if self.charge > 600:
                     self.charge = 600
-                enemy.hearts -= self.charge / 600 * self.inventory[SWORD].damage
+                enemy.hearts -= self.charge / 600 * self.inventory[self.equiped].damage
                 enemy.hit.play()
         else:
-            self.inventory[SWORD].s_miss.play()
+            self.inventory[self.equiped].s_miss.play()
         self.charge = 0
 
     def shootArrow(self):
         if self.charge > 600:
             self.charge = 600
-
-        if self.inventory[QUIVER] > 0:
+        arrow = self.inventory[ARROW]
+        if arrow:
             tl = self.rect.topleft
-            self.inventory[ARROWS].add(arrow(self.face,[tl[0] + 8, tl[1] + 16] , self.charge))
-            self.inventory[QUIVER] -= 1
+            self.arrows.add(arrow(self.face,[tl[0] + 8, tl[1] + 16] , self.charge))
         self.charge = 0
 
     def update(self, dt, walls):
@@ -94,69 +87,75 @@ class Player(pygame.sprite.Sprite):
             self.kill()
             return False
 
-        self.vx, self.vy = 0, 0
+        vx, vy = 0, 0
         keys = pygame.key.get_pressed()
 
         if keys[K_UP]:
-            self.vy = -self.speed
+            vy = -self.speed
             self.face = UP
-            self.inventory[SWORD].reverse()
+            self.inventory[self.equiped].reverse()
 
         if keys[K_DOWN]:
-            self.vy =  self.speed
+            vy =  self.speed
             self.face = DOWN
-            self.inventory[SWORD].normal()
+            self.inventory[self.equiped].normal()
 
         if keys[K_LEFT]:
-            self.vx = -self.speed
+            vx = -self.speed
             self.face = LEFT
-            self.inventory[SWORD].normal()
+            self.inventory[self.equiped].normal()
 
         if keys[K_RIGHT]:
-            self.vx =  self.speed
+            vx =  self.speed
             self.face = RIGHT
-            self.inventory[SWORD].reverse()
+            self.inventory[self.equiped].reverse()
 
         if keys[K_1]:
-            if self.inventory[SWORD] != None:
-                self.equiped = SWORD
+            if self.inventory[DAGGER] != None:
+                self.equiped = DAGGER
 
         if keys[K_2]:
+            if self.inventory[SABER] != None:
+                self.equiped = SABER
+
+        if keys[K_3]:
             if self.inventory[BOW] != None:
                 self.equiped = BOW
 
         if keys[K_SPACE]:
             if self.equiped == BOW:
                 self.charge += dt
-            elif self.equiped == SWORD:
-                self.inventory[SWORD].swordUp()
+
+            elif self.equiped == DAGGER or self.equiped == SABER:
+                self.inventory[self.equiped].up()
                 self.charge += dt
+
         elif self.charge > 0:
             if self.equiped == BOW:
                 self.shootArrow()
-            elif self.equiped == SWORD:
+            elif self.equiped == DAGGER or self.equiped == SABER:
                 self.swingSword()
 
-        if self.vx and self.vy:
-            self.vx *= DIAG
-            self.vy *= DIAG
+        if vx and vy:
+            vx *= DIAG
+            vy *= DIAG
 
 
         dt /= 1000.0
         prev_rect = self.rect.copy()
-        self.rect.x += self.vx * dt
-        self.rect.y += self.vy * dt
+        self.rect.x += vx * dt
+        self.rect.y += vy * dt
 
         if 0 > self.rect.x:
             self.rect.x = 0
-        if  self.rect.x > MAPWIDTH * (TILESIZE):
-            self.rect.x = MAPWIDTH * (TILESIZE)
+        if  self.rect.x > MAPWIDTH * (TILESIZE-1):
+            self.rect.x = MAPWIDTH * (TILESIZE-1)
         if 0 > self.rect.y:
             self.rect.y = 0
-        if  self.rect.y > MAPHEIGHT * (TILESIZE - 1.5):
-            self.rect.y = MAPHEIGHT * (TILESIZE - 1.5)
+        if  self.rect.y > MAPHEIGHT * (TILESIZE - 1):
+            self.rect.y = MAPHEIGHT * (TILESIZE - 1)
 
-        if self.vx != 0 or self.vy != 0:
+        if vx != 0 or vy != 0:
             self.image = self.direction[self.face + self.foot]
             self.foot = ((self.foot + 1) % 4)
         else:
@@ -177,60 +176,45 @@ class Player(pygame.sprite.Sprite):
                     if self.rect.bottom >= rect.top >= prev_rect.bottom:
                         self.rect.bottom = rect.top
 
+        self.arrows.update(dt, walls)
 
-        self.inventory[ARROWS].update(dt, walls)
         for i in pygame.sprite.spritecollide(self, ITEMS, True):
-            if issubclass(type(i), sword):
-                i.inInventory = True
-                self.inventory[SWORD] = i
-            elif type(i) == bow:
-                i.inInventory = True
-                self.inventory[BOW] = i
-            elif type(i) == arrow:
-                self.inventory[QUIVER] += 1
+            if issubclass(type(i), sword) or type(i) == bow or type(i) == arrow:
+                self.inventory.addToolbar(i)
             elif type(i) == heart:
                 if self.hearts < self.maxhearts:
                     self.hearts += 2
 
 
         if self.face == UP:
-            self.inventory[SWORD].rect.x = self.rect.x
-            self.inventory[SWORD].rect.y = self.rect.y + self.inventory[SWORD].handle[1] - 24  - self.rect.size[1]
+            self.inventory[self.equiped].rect.x = self.rect.x
+            self.inventory[self.equiped].rect.bottom = self.rect.top - 32
         if self.face == DOWN:
-            self.inventory[SWORD].rect.x = self.rect.x
-            self.inventory[SWORD].rect.y = self.rect.y + self.inventory[SWORD].handle[1] + 32 + self.rect.size[1]
-
+            self.inventory[self.equiped].rect.x = self.rect.x
+            self.inventory[self.equiped].rect.top = self.rect.bottom
         if self.face == RIGHT:
-            self.inventory[SWORD].rect.x = self.rect.x + 16  + self.rect.size[0]
-            self.inventory[SWORD].rect.y = self.rect.y + self.inventory[SWORD].handle[1]
+            self.inventory[self.equiped].rect.left = self.rect.right
+            self.inventory[self.equiped].rect.y = self.rect.y
         if self.face == LEFT:
-            self.inventory[SWORD].rect.x = self.rect.x - 16 - self.rect.size[0]
-            self.inventory[SWORD].rect.y = self.rect.y + self.inventory[SWORD].handle[1]
-
+            self.inventory[self.equiped].rect.right = self.rect.left - 32
+            self.inventory[self.equiped].rect.y = self.rect.y
         return True
 
     def draw(self, SCREEN, rect):
         #Might want to draw the shield behind the player
-        if self.face == UP and self.equiped == SWORD:
-            s = self.inventory[SWORD]
-            SCREEN.blit(s.image, (rect[0], rect[1] + s.handle[1] - 24))
-            SCREEN.blit(self.inventory[SHIELD].image, (rect[0], rect[1] + 20))
-
-        if self.face == RIGHT and self.equiped == SWORD:
-            SCREEN.blit(self.inventory[SHIELD].image, (rect[0]+ 10, rect[1] + 20))
 
         SCREEN.blit(self.image, rect)
 
-        if issubclass(type(self.inventory[SWORD]), sword) and self.equiped == SWORD:
-            s = self.inventory[SWORD]
+        if issubclass(type(self.inventory[self.equiped]), sword):
+            s = self.inventory[self.equiped]
+            if self.face == UP:
+                SCREEN.blit(s.image, (rect[0], rect.top-32))
             if self.face == DOWN:
-                SCREEN.blit(s.image, (rect[0], rect[1] + s.handle[1] + 16))
-                SCREEN.blit(self.inventory[SHIELD].image, (rect[0]+ 20, rect[1] + 20))
-            elif self.face == RIGHT:
-                SCREEN.blit(s.image, (rect[0] + 16, rect[1] + s.handle[1]))
+                SCREEN.blit(s.image, (rect[0], rect.bottom))
+            if self.face == RIGHT:
+                SCREEN.blit(s.image, (rect.right, rect[1]))
             if self.face == LEFT:
-                SCREEN.blit(s.image, (rect[0] - 16, rect[1] + s.handle[1]))
-                SCREEN.blit(self.inventory[SHIELD].image, (rect[0]+ 10, rect[1] + 20))
+                SCREEN.blit(s.image, (rect.left-32, rect[1]))
 
-        if type(self.inventory[BOW]) == bow and self.equiped == BOW:
+        if type(self.inventory[self.equiped]) == bow:
             SCREEN.blit(self.inventory[BOW].image, (rect[0] + 8, rect[1] + 11))
