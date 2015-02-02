@@ -41,6 +41,7 @@ class enemy(pygame.sprite.Sprite):
         self.attacking = False
         self.attack_length = 0
         self.foot = LEFT_FOOT
+        self.hit = pygame.mixer.Sound("Sounds/Effects/NPC/giant/giant1.ogg")
 
     def attack(self):
         self.attack_length = 12
@@ -60,6 +61,10 @@ class enemy(pygame.sprite.Sprite):
 
 
     def update(self, target, dt, walls, player):
+
+        for arrow in pygame.sprite.spritecollide(self, player.inventory[ARROWS], True):
+            self.hearts -= arrow.speed / 100
+
         if self.hearts <= 0:
             self.kill(player)
 
@@ -91,7 +96,7 @@ class enemy(pygame.sprite.Sprite):
 
         if t[0] != 0 or t[1] != 0:
             self.image = self.direction[self.face + self.foot]
-            self.foot = (self.foot + 1) % 3
+            self.foot = ((self.foot + 1) % 4)
         else:
             self.image = self.direction[self.face]
 
@@ -102,6 +107,7 @@ class enemy(pygame.sprite.Sprite):
                     rect = sprite.rect
                     if self.rect.left <= rect.right <= prev_rect.left :
                         self.rect.left = rect.right
+
                         self.rect.y -= t[0] * self.speed * dt
                     if self.rect.right >= rect.left >= prev_rect.right:
                         self.rect.right = rect.left
