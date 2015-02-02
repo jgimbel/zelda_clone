@@ -38,6 +38,7 @@ class Game():
         pygame.mixer.music.load('Sounds/Music/TheLoomingBattle_0.OGG')
         pygame.mixer.music.play(-1)
         pygame.mixer.music.pause()
+        scientist(0,0)
         while True:
             self.update()
 
@@ -46,6 +47,7 @@ class Game():
         ENEMIES.remove(ENEMIES.sprites())
         self.paused = False
         self.wave = 1
+        self.nextWave()
 
     def quit(self):
         pygame.quit()
@@ -91,9 +93,10 @@ class Game():
         dt = self.fpsClock.tick(60)
 
         #TODO timer after waves,
-        if len(ENEMIES) <= 0:
+        if not self.betweenWave and len(ENEMIES) <= 0:
             self.wave += 1
             self.betweenWave = True
+
         if self.betweenWave:
             if self.waveCounter > 30000:
                 self.betweenWave = False

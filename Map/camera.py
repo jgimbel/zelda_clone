@@ -39,7 +39,7 @@ class Camera(object):
         if self.rect.colliderect(player.rect):
             r = self.rel_rect(player.rect, self.rect)
             player.draw(surf, r)
-        for a in player.arrows:
+        for a in player.inventory[ARROWS]:
             if self.rect.colliderect(a.rect):
                 r = self.rel_rect(a.rect, self.rect)
                 a.draw(surf, r)
@@ -55,7 +55,7 @@ class Camera(object):
         #TODO: make counter to when the next wave starts
         screen = pygame.display.get_surface()
         w,h = screen.get_width(),screen.get_height()
-        text = INVFONT.render("arrows: %s, Enemies: %s, Wave: %s" % (str(player.inventory[ARROWS]), str(len(ENEMIES)), str(wave)), True, WHITE, BLACK)
+        text = INVFONT.render("arrows: %s, Enemies: %s, Wave: %s" % (str(len(player.inventory[ARROWS])), str(len(ENEMIES)), str(wave)), True, WHITE, BLACK)
 
         hud = text.get_rect()
         hud.topleft = [0, h - hud.size[1] - 9]

@@ -63,9 +63,7 @@ class Player(pygame.sprite.Sprite):
         }
 
     def killed(self):
-        self.score += 1
-        if self.score % 4 == 0:
-            self.level += 1
+        pass
 
     def swingSword(self):
         self.inventory[SWORD].swordDown()
@@ -177,7 +175,7 @@ class Player(pygame.sprite.Sprite):
                         self.rect.bottom = rect.top
 
 
-        self.arrows.update(dt, walls)
+        self.inventory[ARROWS].update(dt, walls)
 
         if self.face == UP:
             self.inventory[SWORD].rect.x = self.rect.x
