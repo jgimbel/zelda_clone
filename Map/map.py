@@ -1,11 +1,11 @@
 __author__ = 'joel'
-
-import json
+import cPickle as pickle
 
 from pygame import Rect
 
 from resources import *
 from Tile import tile
+
 
 class Map:
     #TODO trap tiles maybe?,
@@ -14,8 +14,9 @@ class Map:
     tilemap = pygame.sprite.Group()
     def __init__(self, player):
         self.player = player
-        f = open("Map/map.json")
-        map = json.loads(f.read())
+        f = open("Map/map.pkl", "r+b")
+        self.pickler = pickle.Pickler(f, -1)
+        map = pickle.load(f)
         for cl, row in enumerate(map):
             for rw, t in enumerate(row):
                 self.tilemap.add(tile(t, [cl * TILESIZE, rw * TILESIZE]))
@@ -26,3 +27,6 @@ class Map:
     def draw(self, SCREEN, rect):
         for t in self.tilemap:
             t.draw(SCREEN, self.rel_rect(t.rect, rect))
+
+    def place(self, tile, loc):
+        pass
