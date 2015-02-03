@@ -47,7 +47,6 @@ class Backpack():
         else:
             for vx in range(self.sizeX):
                 if self.toolbar[vx].type == item.type:
-                    print self.toolbar[vx]
                     self.toolbar[vx].add(item)
                     return None
             for vx in range(self.sizeX):

@@ -188,20 +188,20 @@ class enemy(pygame.sprite.Sprite):
         if abs(t[0]) > abs(t[1]):
             if t[0] > 0:
                 self.face = LEFT
-                if dist < CAMHEIGHT*TILESIZE and target.rect.y - 10 <= self.rect.y <= target.rect.y + 10 and target.rect.x < self.rect.x:
+                if dist < CAMWIDTH*TILESIZE and target.rect.y - dist <= self.rect.y <= target.rect.y + dist and target.rect.x < self.rect.x:
                     self.foundPlayer = True
             else:
                 self.face = RIGHT
-                if dist < CAMHEIGHT*TILESIZE and target.rect.y - 10 <= self.rect.y <= target.rect.y + 10 and target.rect.x > self.rect.x:
+                if dist < CAMWIDTH*TILESIZE and target.rect.y - dist <= self.rect.y <= target.rect.y + dist and target.rect.x > self.rect.x:
                     self.foundPlayer = True
         else:
             if t[1] > 0:
                 self.face = UP
-                if dist < CAMHEIGHT*TILESIZE and target.rect.x - 10 <= self.rect.x <= target.rect.x + 10 and target.rect.y < self.rect.y:
+                if dist < CAMWIDTH*TILESIZE and target.rect.x - dist <= self.rect.x <= target.rect.x + dist and target.rect.y < self.rect.y:
                     self.foundPlayer = True
             else:
                 self.face = DOWN
-                if dist < CAMHEIGHT*TILESIZE and target.rect.x - 10 <= self.rect.x <= target.rect.x + 10 and target.rect.y > self.rect.y:
+                if dist < CAMWIDTH*TILESIZE and target.rect.x - dist <= self.rect.x <= target.rect.x + dist and target.rect.y > self.rect.y:
                     self.foundPlayer = True
 
         return t
