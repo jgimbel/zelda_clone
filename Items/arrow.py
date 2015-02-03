@@ -3,13 +3,20 @@ from resources import *
 from Map.Tile import tile
 from item import Item
 class arrow(Item):
-    def __init__(self, face, tl, charge):
+    direction = ""
+    speed = 0
+    distance = 0
+    vx = 0
+    vy = 0
+    def __init__(self, tl):
         super(arrow, self).__init__("Sprites/items/arrow.png")
         self.item = ARROW
         self.rect.topleft = tl
+
+
+    def shoot(self, face, tl, charge):
+        self.rect.topleft = tl
         self.direction = face
-        self.vx = 0
-        self. vy = 0
         self.distance = 0
         self.speed = charge
         if self.direction == UP:
