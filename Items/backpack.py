@@ -83,7 +83,7 @@ class Backpack():
             for item in i:
                 if item.type:
                     disp.blit(item.image, [x, y])
-                    disp.blit(INVFONT.render(str(len(item)), True, WHITE, BLACK), [x, y])
+                    disp.blit(INVFONT.render(str(len(item)), True, WHITE, BLACK), [x+16, y+16])
                 else:
                     disp.blit(empty, [x, y])
                 x += 34
@@ -93,7 +93,7 @@ class Backpack():
         for item in self.toolbar:
             if item:
                 disp.blit(item.image, [x, y])
-                disp.blit(INVFONT.render(str(len(item)), True, WHITE, BLACK), [x, y])
+                disp.blit(INVFONT.render(str(len(item)), True, WHITE, BLACK), [x+16, y+16])
             else:
                 disp.blit(empty, [x, y])
             x += 32

@@ -91,7 +91,7 @@ class Game():
                 self.betweenWave = True
 
             if self.betweenWave:
-                if self.waveCounter > 30000:
+                if self.waveCounter > 10000:
                     self.betweenWave = False
                     self.waveCounter = 0
                     self.nextWave()

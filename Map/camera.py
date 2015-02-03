@@ -93,7 +93,7 @@ class Camera(object):
         for item in player.inventory.toolbar:
             if item:
                 disp.blit(item.image, [x, y])
-                disp.blit(INVFONT.render(str(len(item)), True, WHITE, BLACK), [x, y])
+                disp.blit(INVFONT.render(str(len(item)), True, WHITE, BLACK), [x+16, y+16])
             else:
                 disp.blit(empty, [x, y])
             x += 34
