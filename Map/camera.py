@@ -55,7 +55,7 @@ class Camera(object):
 
     def drawTimer(self, timer):
         w = self.screen.get_width()
-        text = INVFONT.render("Time to next wave: " + str(30 - int(timer/1000)), True, WHITE, BLACK).convert_alpha()
+        text = INVFONT.render("Time to next wave: " + str(10 - int(timer/1000)), True, WHITE, BLACK).convert_alpha()
 
         hud = text.get_rect()
         hud.topleft = [w/2 - hud.size[0]/2, 7]

@@ -84,8 +84,8 @@ class Game():
 
     def update(self):
 
+        dt = self.fpsClock.tick(60)
         if not self.paused:
-            dt = self.fpsClock.tick(60)
             if not self.betweenWave and len(ENEMIES) <= 0:
                 self.wave += 1
                 self.betweenWave = True
