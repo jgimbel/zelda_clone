@@ -5,6 +5,7 @@ from resources import BLACK, WHITE, INVFONT
 
 
 class Backpack():
+    #TODO UI for building/placing items
     def __init__(self):
         self.sizeX = 5
         self.sizeY = 5

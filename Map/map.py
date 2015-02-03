@@ -1,29 +1,23 @@
 __author__ = 'joel'
-import random
+
+import json
 
 from pygame import Rect
 
 from resources import *
 from Tile import tile
 
-
 class Map:
-    #TODO Solid map construct,
     #TODO trap tiles maybe?,
-    # #TODO different map after lvl 50 to reset creep count (just make stronger monsters and different map to keep the game from exploding from too many enemies),
+    #TODO different map after lvl 50 to reset creep count (just make stronger monsters and different map to keep the game from exploding from too many enemies),
 
     tilemap = pygame.sprite.Group()
     def __init__(self, player):
         self.player = player
-        back = [[DIRT for w in range(MAPWIDTH)] for h in range(MAPHEIGHT)]
-        for rw in range(MAPHEIGHT):
-            for cl in range(MAPWIDTH):
-                randomNumber = random.randint(0, 15)
-                if 0 <= randomNumber <= 7:
-                    t = GRASS
-                else:
-                    t = DIRT
-
+        f = open("Map/map.json")
+        map = json.loads(f.read())
+        for cl, row in enumerate(map):
+            for rw, t in enumerate(row):
                 self.tilemap.add(tile(t, [cl * TILESIZE, rw * TILESIZE]))
 
     def rel_rect(self, rect, parent):
