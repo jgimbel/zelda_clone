@@ -101,11 +101,11 @@ class Backpack():
 
     def __getitem__(self, item):
         for i in self.toolbar:
-            if i.type == item:
+            if i.type == item and len(i.sprites()) > 0:
                 return i.sprites()[0]
 
         for items in self.inventory:
-            for i in items:
+            for i in items and len(i.sprites()) > 0:
                 if i.type == item:
                     return i.sprites()[0]
 
