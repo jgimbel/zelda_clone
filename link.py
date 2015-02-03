@@ -55,11 +55,11 @@ class Player(pygame.sprite.Sprite):
 
         self.arrows = pygame.sprite.Group()
         self.inventory = Backpack()
-        self.inventory.addToolbar(dagger(True))
+        self.inventory.addToolbar(dagger(True), 0)
+        #self.inventory.addToolbar(saber())
 
         self.equiped = self.inventory[DAGGER]
         self.foot = LEFT_FOOT
-
 
     def swingSword(self):
         self.equiped.down()
@@ -78,10 +78,11 @@ class Player(pygame.sprite.Sprite):
     def shootArrow(self):
         if self.charge > 600:
             self.charge = 600
-        arrow = self.inventory[ARROW]
-        if arrow:
+        if self.inventory[ARROW] is not None:
             tl = self.rect.topleft
-            self.arrows.add(arrow.shoot(self.face, [tl[0] + 8, tl[1] + 16], self.charge))
+            a = self.inventory.drop(ARROW)
+            self.arrows.add(a)
+            a.shoot(self.face, [tl[0] + 8, tl[1] + 16], self.charge)
         self.charge = 0
 
     def update(self, dt, walls):
@@ -118,16 +119,24 @@ class Player(pygame.sprite.Sprite):
             self.equiped.reverse()
 
         if keys[K_1]:
-            if self.inventory[DAGGER]:
-                self.equiped = self.inventory[DAGGER]
+            if self.inventory.toolbar[0].type is not None and self.inventory.toolbar[0].type != ARROW:
+                self.equiped = self.inventory.toolbar[0].sprites()[0]
 
         if keys[K_2]:
-            if self.inventory[SABER]:
-                self.equiped = self.inventory[SABER]
+            if self.inventory.toolbar[1].type is not None and self.inventory.toolbar[0].type != ARROW:
+                self.equiped = self.inventory.toolbar[1].sprites()[0]
 
         if keys[K_3]:
-            if self.inventory[BOW]:
-                self.equiped = self.inventory[BOW]
+            if self.inventory.toolbar[2].type is not None and self.inventory.toolbar[0].type != ARROW:
+                self.equiped = self.inventory.toolbar[2].sprites()[0]
+
+        if keys[K_4]:
+            if self.inventory.toolbar[3].type is not None and self.inventory.toolbar[0].type != ARROW:
+                self.equiped = self.inventory.toolbar[3].sprites()[0]
+
+        if keys[K_5]:
+            if self.inventory.toolbar[4].type is not None and self.inventory.toolbar[0].type != ARROW:
+                self.equiped = self.inventory.toolbar[4].sprites()[0]
 
         if keys[K_SPACE]:
             if type(self.equiped) == bow:

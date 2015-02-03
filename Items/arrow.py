@@ -10,7 +10,7 @@ class arrow(Item):
     vy = 0
     def __init__(self, tl):
         super(arrow, self).__init__("Sprites/items/arrow.png")
-        self.item = ARROW
+        self.type = ARROW
         self.rect.topleft = tl
 
 

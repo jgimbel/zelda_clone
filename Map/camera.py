@@ -67,16 +67,10 @@ class Camera(object):
 
 
     def drawHUD(self, player, wave):
-        h =self.screen.get_height()
+        h, w =self.screen.get_height(), self.screen.get_width()
 
-        text = INVFONT.render("arrows: %s, Enemies: %s, Wave: %s" % (str(), str(len(ENEMIES)), str(wave)), True, WHITE, BLACK).convert_alpha()
-
-        hud = text.get_rect()
-        hud.topleft = [0, h - hud.size[1] - 9]
-        self.screen.blit(text, hud)
-
+        #draw the hearts
         hearts = pygame.Surface((10 * player.maxhearts, 8))
-
         for i in range(int(math.ceil(player.maxhearts))):
             hr = HEART.get_rect()
             hr.topleft = [(i*10), 0]
@@ -85,9 +79,35 @@ class Camera(object):
             else:
                 hearts.blit(EMPTY_HEART, hr)
         hr = hearts.get_rect()
-        hr.topleft = [0, h - hr.size[1]]
+        hr.topleft = [w/2 - hr.size[0]/2, h - hr.size[1]]
         hearts.set_colorkey((0,0,0), pygame.RLEACCEL)
         self.screen.blit(hearts.convert_alpha(), hr)
+        buffer = hr.size[1] + 2
+
+        #draw the inventory
+        disp = pygame.surface.Surface((174, 36))
+        disp.fill(BLACK)
+        empty = pygame.surface.Surface((32, 32))
+        empty.fill(WHITE)
+        x, y = 2, 2
+        for item in player.inventory.toolbar:
+            if item:
+                disp.blit(item.image, [x, y])
+                disp.blit(INVFONT.render(str(len(item)), True, WHITE, BLACK), [x, y])
+            else:
+                disp.blit(empty, [x, y])
+            x += 34
+
+        hud = disp.get_rect()
+        hud.topleft = [w/2 - hud.size[0]/2, h - hud.size[1] - buffer]
+        self.screen.blit(disp, hud)
+        buffer += hud.size[1] + 2
+
+        #Draw the the enemy count
+        text = INVFONT.render(" Enemies: %s, Wave: %s" % (str(len(ENEMIES)), str(wave)), True, WHITE, BLACK).convert_alpha()
+        hud = text.get_rect()
+        hud.topleft = [w/2 - hud.size[0]/2, h - hud.size[1] - buffer]
+        self.screen.blit(text, hud)
 
     def drawInventory(self, inventory):
         inventory.draw(self.screen)

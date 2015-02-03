@@ -65,16 +65,16 @@ class enemy(pygame.sprite.Sprite):
     def kill(self, player):
         super(enemy, self).kill()
         item = randrange(0,100)
-        if item < 30:
+        if item < 40:
             ITEMS.add(arrow(self.rect.topleft))
             if item < 20:
                 ITEMS.add(arrow(self.rect.topleft))
                 if item < 10:
                     ITEMS.add(arrow(self.rect.topleft))
 
-        elif 30  < item <= 50:
+        elif 40  < item <= 60:
             ITEMS.add(bow(self.rect.topleft))
-        elif 50 < item <= 70:
+        elif 60 < item <= 80:
             ITEMS.add(saber(self.rect.topleft))
         else:
             ITEMS.add(heart(self.rect.topleft))
