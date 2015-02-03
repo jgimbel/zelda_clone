@@ -123,19 +123,19 @@ class Player(pygame.sprite.Sprite):
                 self.equiped = self.inventory.toolbar[0].sprites()[0]
 
         if keys[K_2]:
-            if self.inventory.toolbar[1].type is not None and self.inventory.toolbar[0].type != ARROW:
+            if self.inventory.toolbar[1].type is not None and self.inventory.toolbar[1].type != ARROW:
                 self.equiped = self.inventory.toolbar[1].sprites()[0]
 
         if keys[K_3]:
-            if self.inventory.toolbar[2].type is not None and self.inventory.toolbar[0].type != ARROW:
+            if self.inventory.toolbar[2].type is not None and self.inventory.toolbar[2].type != ARROW:
                 self.equiped = self.inventory.toolbar[2].sprites()[0]
 
         if keys[K_4]:
-            if self.inventory.toolbar[3].type is not None and self.inventory.toolbar[0].type != ARROW:
+            if self.inventory.toolbar[3].type is not None and self.inventory.toolbar[3].type != ARROW:
                 self.equiped = self.inventory.toolbar[3].sprites()[0]
 
         if keys[K_5]:
-            if self.inventory.toolbar[4].type is not None and self.inventory.toolbar[0].type != ARROW:
+            if self.inventory.toolbar[4].type is not None and self.inventory.toolbar[4].type != ARROW:
                 self.equiped = self.inventory.toolbar[4].sprites()[0]
 
         if keys[K_SPACE]:
