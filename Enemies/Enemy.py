@@ -149,40 +149,40 @@ class enemy(pygame.sprite.Sprite):
         t = (0,0)
         if 1<= nextFace < 2:
             if self.face == UP:
-                t = (0,1)
+                t = (0,10)
             if self.face == DOWN:
-                t = (0,-1)
+                t = (0,-10)
             if self.face == RIGHT:
-                t = (1,0)
+                t = (10,0)
             if self.face == LEFT:
-                t = (-1,0)
+                t = (-10,0)
         if 2 <= nextFace < 4:
             if self.face == UP:
-                t = (-1,0)
+                t = (-10,0)
             if self.face == DOWN:
-                t = (1,0)
+                t = (10,0)
             if self.face == RIGHT:
-                t = (0,-1)
+                t = (0,-10)
             if self.face == LEFT:
-                t = (0,1)
+                t = (0,10)
         if 4 <= nextFace < 6:
             if self.face == UP:
-                t = (1,0)
+                t = (5,0)
             if self.face == DOWN:
-                t = (-1,0)
+                t = (-5,0)
             if self.face == RIGHT:
-                t = (0,1)
+                t = (0,5)
             if self.face == LEFT:
-                t = (0,-1)
-        if 6 <= nextFace < 8:
+                t = (0,-5)
+        if 6 <= nextFace:
             if self.face == UP:
-                t = (0,-1)
+                t = (0,-5)
             if self.face == DOWN:
-                t = (0,1)
+                t = (0,5)
             if self.face == RIGHT:
-                t = (-1,0)
+                t = (-5,0)
             if self.face == LEFT:
-                t = (1,0)
+                t = (5,0)
 
         dist = math.sqrt((self.rect.x - target.rect.x)**2 + (self.rect.y - target.rect.y)**2)
         if abs(t[0]) > abs(t[1]):
