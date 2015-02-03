@@ -70,7 +70,8 @@ class Player(pygame.sprite.Sprite):
                 if self.charge > 600:
                     self.charge = 600
                 enemy.hearts -= self.charge / 600 * self.equiped.damage
-                enemy.hit.play()
+            enemy.foundPlayer = True
+            enemy.hit.play()
         else:
             self.equiped.s_miss.play()
         self.charge = 0

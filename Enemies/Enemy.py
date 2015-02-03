@@ -14,6 +14,7 @@ class enemy(pygame.sprite.Sprite):
     #TODO different enemies,
     speed = 100
     hearts = 5.0
+    moveWait = 0
     def __init__(self, sprite, x, y):
         pygame.sprite.Sprite.__init__(self, ENEMIES)
         self.ss = sprite
@@ -139,26 +140,68 @@ class enemy(pygame.sprite.Sprite):
             self.image = self.direction[self.face]
 
     def moveRandom(self, target):
-        d = randrange(-100, 100), randrange(-100, 100)
-        t = self.normalize_vector(d[0] ,d[1])
+        if self.moveWait < randrange(20, 90):
+            self.moveWait += 1
+            return 0,0
+        else:
+            self.moveWait = 0
+        nextFace = randrange(1,10,1)
+        t = (0,0)
+        if 1<= nextFace < 2:
+            if self.face == UP:
+                t = (0,1)
+            if self.face == DOWN:
+                t = (0,-1)
+            if self.face == RIGHT:
+                t = (1,0)
+            if self.face == LEFT:
+                t = (-1,0)
+        if 2 <= nextFace < 4:
+            if self.face == UP:
+                t = (-1,0)
+            if self.face == DOWN:
+                t = (1,0)
+            if self.face == RIGHT:
+                t = (0,-1)
+            if self.face == LEFT:
+                t = (0,1)
+        if 4 <= nextFace < 6:
+            if self.face == UP:
+                t = (1,0)
+            if self.face == DOWN:
+                t = (-1,0)
+            if self.face == RIGHT:
+                t = (0,1)
+            if self.face == LEFT:
+                t = (0,-1)
+        if 6 <= nextFace < 8:
+            if self.face == UP:
+                t = (0,-1)
+            if self.face == DOWN:
+                t = (0,1)
+            if self.face == RIGHT:
+                t = (-1,0)
+            if self.face == LEFT:
+                t = (1,0)
 
+        dist = math.sqrt((self.rect.x - target.rect.x)**2 + (self.rect.y - target.rect.y)**2)
         if abs(t[0]) > abs(t[1]):
             if t[0] > 0:
                 self.face = LEFT
-                if target.rect.y - 10 <= self.rect.y <= target.rect.y + 10 and target.rect.x < self.rect.x:
+                if dist < CAMHEIGHT*TILESIZE/2 and target.rect.y - 10 <= self.rect.y <= target.rect.y + 10 and target.rect.x < self.rect.x:
                     self.foundPlayer = True
             else:
                 self.face = RIGHT
-                if target.rect.y - 10 <= self.rect.y <= target.rect.y + 10 and target.rect.x > self.rect.x:
+                if dist < CAMHEIGHT*TILESIZE/2 and target.rect.y - 10 <= self.rect.y <= target.rect.y + 10 and target.rect.x > self.rect.x:
                     self.foundPlayer = True
         else:
             if t[1] > 0:
                 self.face = UP
-                if target.rect.y - 10 <= self.rect.x <= target.rect.x + 10 and target.rect.y < self.rect.y:
+                if dist < CAMHEIGHT*TILESIZE/2 and target.rect.x - 10 <= self.rect.x <= target.rect.x + 10 and target.rect.y < self.rect.y:
                     self.foundPlayer = True
             else:
                 self.face = DOWN
-                if target.rect.y - 10 <= self.rect.x <= target.rect.x + 10 and target.rect.y > self.rect.y:
+                if dist < CAMHEIGHT*TILESIZE/2 and target.rect.x - 10 <= self.rect.x <= target.rect.x + 10 and target.rect.y > self.rect.y:
                     self.foundPlayer = True
 
         return t
@@ -187,6 +230,7 @@ class enemy(pygame.sprite.Sprite):
 
         for a in pygame.sprite.spritecollide(self, target.arrows, True):
             self.hearts -= a.speed / 100
+            self.foundPlayer = True
 
         if self.hearts <= 0:
             self.kill(target)
